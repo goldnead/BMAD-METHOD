@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="cflow-authenticity-scorer" version="1.0">
+  <metadata>
+    <name>Authenticity Scorer</name>
+    <description>Analyzes text for AI fingerprints and authenticity markers, returning a score from 0-100</description>
+    <author>Adrian Goldner</author>
+    <module>cflow</module>
+    <complexity>standard</complexity>
+  </metadata>
+
+  <inputs>
+    <input name="text" type="string" required="true">
+      <description>The text content to analyze for authenticity</description>
+    </input>
+    <input name="tone_of_voice_guide" type="file" required="false">
+      <description>Optional: User's tone-of-voice guide for reference</description>
+      <default>{project-root}/bmad/cflow/data/tone-of-voice-guide.md</default>
+    </input>
+  </inputs>
+
+  <outputs>
+    <output name="authenticity_score" type="number">
+      <description>Final authenticity score (0-100)</description>
+      <range min="0" max="100"/>
+    </output>
+    <output name="detailed_report" type="markdown">
+      <description>Detailed breakdown with identified issues and positive markers</description>
+    </output>
+  </outputs>
+
+  <instructions>
+    <step n="1">
+      <action>Load the text to analyze from the input parameter</action>
+    </step>
+
+    <step n="2">
+      <action>Initialize scoring system</action>
+      <details>
+        - Start with base score of 70 points
+        - AI fingerprints will subtract points
+        - Authenticity markers will add points
+        - Final score capped at 0-100
+      </details>
+    </step>
+
+    <step n="3">
+      <action>Scan for AI FINGERPRINTS (each occurrence = -5 points)</action>
+      <criteria>
+        <ai-fingerprint type="contrast-framing" severity="high">
+          <patterns>
+            - "Es geht nicht um X, sondern um Y"
+            - "Nicht X ist wichtig, sondern Y"
+            - "Vergiss X, konzentrier dich auf Y"
+          </patterns>
+          <penalty>-5 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="rule-of-three-overload" severity="medium">
+          <patterns>
+            - Excessive use of three-item lists
+            - "X, Y, und Z" in every paragraph
+            - Forced triadic structures
+          </patterns>
+          <penalty>-3 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="infomercial-transitions" severity="high">
+          <patterns>
+            - "Die brutale Wahrheit?"
+            - "Hier ist die Realität:"
+            - "Das Geheimnis ist..."
+            - "Lass mich dir etwas verraten..."
+          </patterns>
+          <penalty>-5 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="corporate-buzzwords" severity="medium">
+          <patterns>
+            - "implementieren", "optimieren", "skalieren"
+            - "ganzheitlich", "nachhaltig", "innovativ"
+            - "maximieren", "transformieren"
+            - Excessive use of abstract nouns ending in -ierung
+          </patterns>
+          <penalty>-3 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="vague-filler-phrases" severity="medium">
+          <patterns>
+            - "Es ist wichtig zu erwähnen..."
+            - "Grundsätzlich gilt..."
+            - "Letztendlich hängt es davon ab..."
+            - "In der Regel..."
+          </patterns>
+          <penalty>-2 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="hyperbolic-superlatives" severity="high">
+          <patterns>
+            - "revolutionär", "bahnbrechend", "game-changing"
+            - "ultimativ", "perfekt", "unglaublich"
+            - Excessive exclamation marks (more than 1 per 300 words)
+          </patterns>
+          <penalty>-4 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="generic-metaphors" severity="low">
+          <patterns>
+            - "Die Reise beginnt..."
+            - "Tauchen wir ein in..."
+            - "Entdecke die Welt von..."
+            - "Öffne die Tür zu..."
+          </patterns>
+          <penalty>-2 points per occurrence</penalty>
+        </ai-fingerprint>
+
+        <ai-fingerprint type="rhetorical-question-spam" severity="medium">
+          <patterns>
+            - More than 3 rhetorical questions per 500 words
+            - Questions followed immediately by answers
+            - "Warum? Weil..." pattern repetition
+          </patterns>
+          <penalty>-3 points per occurrence</penalty>
+        </ai-fingerprint>
+      </criteria>
+    </step>
+
+    <step n="4">
+      <action>Scan for AUTHENTICITY MARKERS (each occurrence = +5 points)</action>
+      <criteria>
+        <authenticity-marker type="personal-anecdote" value="high">
+          <patterns>
+            - First-person stories with specific details
+            - "Neulich hatte ich..." / "Letzte Woche passierte..."
+            - Specific names, places, dates
+            - Vulnerability and personal failure stories
+          </patterns>
+          <reward>+7 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="experience-reflection" value="high">
+          <patterns>
+            - "Früher dachte ich... Heute weiß ich..."
+            - "Anfangs habe ich... Mittlerweile..."
+            - Evolution of thinking over time
+            - Admission of changed opinions
+          </patterns>
+          <reward>+6 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="direct-reader-questions" value="medium">
+          <patterns>
+            - Questions left unanswered for reader reflection
+            - "Wie sieht es bei dir aus?"
+            - Genuine curiosity without immediate answer
+          </patterns>
+          <reward>+4 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="softeners-colloquialisms" value="medium">
+          <patterns>
+            - "vielleicht", "irgendwie", "glaube ich"
+            - "merk ich grad", "kann sein"
+            - Informal language and contractions
+            - Regional dialect touches
+          </patterns>
+          <reward>+3 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="specific-examples" value="high">
+          <patterns>
+            - Concrete numbers, dates, locations
+            - Named tools, books, people
+            - Specific prices, metrics, results
+            - Real client/project examples (anonymized)
+          </patterns>
+          <reward>+5 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="contrarian-opinions" value="high">
+          <patterns>
+            - Going against mainstream advice
+            - "Unpopular opinion:"
+            - Challenging conventional wisdom
+            - Nuanced take on controversial topics
+          </patterns>
+          <reward>+6 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="humor-personality" value="medium">
+          <patterns>
+            - Self-deprecating humor
+            - Playful language and puns
+            - Pop culture references
+            - Emojis used naturally (not forced)
+          </patterns>
+          <reward>+4 points per occurrence</reward>
+        </authenticity-marker>
+
+        <authenticity-marker type="natural-flow-breaks" value="low">
+          <patterns>
+            - Sentence fragments for emphasis
+            - "Und weißt du was?"
+            - Parenthetical asides (like this one)
+            - Conversational interruptions
+          </patterns>
+          <reward>+2 points per occurrence</reward>
+        </authenticity-marker>
+      </criteria>
+    </step>
+
+    <step n="5">
+      <action>Calculate final score</action>
+      <formula>
+        final_score = base_score(70) - total_ai_penalties + total_authenticity_rewards
+        final_score = CLAMP(final_score, 0, 100)
+      </formula>
+    </step>
+
+    <step n="6">
+      <action>Generate detailed report in markdown format</action>
+      <template>
+# Authenticity Score Report
+
+**Final Score:** {score}/100
+
+## Score Interpretation
+
+- 0-50: Stark AI-generiert - Deutliche AI-Fingerprints erkennbar
+- 51-70: Moderate AI-Fingerprints - Authentizität verbessern
+- 71-85: Gut authentisch - Minimale AI-Spuren
+- 86-100: Exzellent authentisch - Natürliche menschliche Stimme
+
+---
+
+## 🚨 AI Fingerprints Gefunden ({total_ai_fingerprints})
+
+{list_each_ai_fingerprint_with_quote_and_penalty}
+
+**Total AI Penalty:** -{total_penalty} points
+
+---
+
+## ✅ Authentizität Markers Gefunden ({total_authenticity_markers})
+
+{list_each_authenticity_marker_with_quote_and_reward}
+
+**Total Authenticity Bonus:** +{total_bonus} points
+
+---
+
+## 📊 Scoring Breakdown
+
+- Base Score: 70
+- AI Penalties: -{total_penalty}
+- Authenticity Bonus: +{total_bonus}
+- **Final Score: {final_score}/100**
+
+---
+
+## 💡 Empfehlungen
+
+{if score < 71:
+  - Entferne identifizierte AI-Fingerprints
+  - Füge mehr persönliche Anekdoten hinzu
+  - Verwende spezifischere Beispiele
+  - Lockere die Sprache auf (Weichmacher, Umgangssprache)
+}
+
+{if score >= 71:
+  - Score ist akzeptabel für Publishing
+  - Optional: Weitere Authentizität durch persönliche Stories
+}
+      </template>
+    </step>
+
+    <step n="7">
+      <action>Return outputs</action>
+      <outputs>
+        - authenticity_score: {final_score}
+        - detailed_report: {markdown_report}
+      </outputs>
+    </step>
+  </instructions>
+
+  <usage-example>
+    <scenario>
+      Validate a draft newsletter article before publishing
+    </scenario>
+    <code>
+      result = authenticity_scorer.run(
+        text: newsletter_draft,
+        tone_of_voice_guide: "bmad/cflow/data/tone-of-voice-guide.md"
+      )
+
+      if result.authenticity_score >= 71:
+        approve_for_publishing()
+      else:
+        send_back_to_writer(result.detailed_report)
+    </code>
+  </usage-example>
+
+  <notes>
+    - The base score of 70 assumes neutral text
+    - Adjust thresholds in config.yaml (authenticity_min_score)
+    - This task can be invoked by the Quality-Validator agent
+    - Run this BEFORE publishing any content
+  </notes>
+</task>

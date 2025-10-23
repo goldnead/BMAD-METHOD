@@ -1,0 +1,375 @@
+# Customer Journey Mapping for ContentFlow
+# Complete customer journey stages, touchpoints, and behavioral patterns for personalized content creation
+
+version: "1.0.0-alpha"
+created_by: "Adrian Goldner"
+last_updated: "2025-10-22"
+total_mapped_customers: 0
+
+# ============================================================================
+# JOURNEY-STAGIEN DEFINITION
+# ============================================================================
+
+journey_stages:
+  awareness:
+    name: "Awareness Stage"
+    description: "First contact with Adrian's content - discovering CVT and choir leadership solutions"
+    typical_duration: "1-4 weeks"
+    key_behaviors: ["Content consumption", "Newsletter signup", "Social media following"]
+    success_indicators: ["Newsletter subscription", "Content downloads", "Social media engagement"]
+    pain_points: ["Stimmversagt bei hohen Tönen", "Motivationsschwierigkeiten", "Veraltete Probenmethodik"]
+    content_needs: ["Educational CVT basics", "Problem identification", "Solution awareness"]
+    cta_types: ["Newsletter optin", "Free mini-course", "Download PDF guide"]
+    transition_triggers: ["Multiple content interactions", "Increasing engagement", "Time-based nurturing"]
+
+  consideration:
+    name: "Consideration Stage"
+    description: "Evaluating solutions - comparing options, seeking validation"
+    typical_duration: "2-6 weeks"
+    key_behaviors: ["Course enrollments", "Webinar attendance", "Multiple page visits", "Email engagement"]
+    success_indicators: ["Course trial enrollment", "Workshop attendance", "Request for consultation"]
+    pain_points: ["Solution comparison", "Price concerns", "Implementation questions", "Feature comparisons"]
+    content_needs: ["Product comparisons", "Case studies", "Success stories", "Detailed product information"]
+    cta_types: ["Trial requests", "Workshop registration", "Free consultation", "Product demos"]
+    transition_triggers: ["Trial participation", "Limited time offers", "Social proof", "Urgency creation"]
+
+  decision:
+    name: "Decision Stage"
+    description: "Making purchase decisions - evaluating value proposition and fit"
+    typical_duration: "1-2 weeks"
+    key_behaviors: ["Sales page visits", "Pricing page views", "Cart additions/abandonments", "Review page access"]
+    success_indicators: ["Product purchase", "Service enrollment", "Contract signing", "Payment completion"]
+    pain_points: ["Final objections", "Budget constraints", "Alternative consideration", "Implementation concerns"]
+    content_needs: ["Product specifications", "Pricing breakdown", "Return on investment", "Implementation timeline"]
+    cta_types: ["Buy buttons", "Payment plans", "Guarantee information", "Final bonuses"]
+    transition_triggers: ["Purchase completion", "Payment confirmation", "Onboarding start", "Support access"]
+
+  retention:
+    name: "Retention Stage"
+    description: "Post-purchase experience - ensuring success and building loyalty"
+    typical_duration: "3-12 months"
+    key_behaviors: ["Product usage", "Support interactions", "Community engagement", "Progress tracking"]
+    success_indicators: ["Course completion", "Skill improvement", "Problem resolution", "Renewal intention"]
+    pain_points: ["Implementation challenges", "Progress plateaus", "Technical difficulties", "Support delays"]
+    content_needs: ["Onboarding materials", "Tutorial content", "Support resources", "Progress tracking tools"]
+    cta_types: ["Support access", "Community invitations", "Advanced training offers", "Renewal incentives"]
+    transition_triggers: ["Course completion", "Skill milestones", "Community status achievement", "Renewal date approaching"]
+
+  advocacy:
+    name: "Advocacy Stage"
+    description: "Loyal customers promoting Adrian's solutions - generating referrals and social proof"
+    typical_duration: "6+ months"
+    key_behaviors: ["Referrals", "Testimonials", "Social sharing", "Case study participation", "Community leadership"]
+    success_indicators: ["Successful referrals", "Public testimonials", "Case study features", "Social media advocacy"]
+    pain_points: ["Advocate motivation", "Referral process complexity", " testimonial creation", "Social media coordination"]
+    content_needs: ["Referral program details", "Advocate recognition", "Sharing templates", "Success celebration content"]
+    cta_types: ["Referral invitations", "Testimonial requests", "Social sharing prompts", "Community leadership opportunities"]
+    transition_triggers: ["Major milestones achieved", "Exceptional results", "Community status changes", "Referral targets met"]
+
+# ============================================================================
+# BEHAVIOURALE SEGMENTE
+# ============================================================================
+
+behavioral_segments:
+  content_consumers:
+    name: "High Engagement Content Consumers"
+    characteristics: ["Read newsletters thoroughly", "Multiple content types", "Regular social engagement", "Click multiple links"]
+    preferences: ["In-depth articles", "Video content", "Practical guides", "Case studies"]
+    journey_patterns: ["Multiple touchpoints before conversion", "Long consideration period", "Research-driven decisions"]
+    communication_preferences: ["Detailed content", "Educational focus", "Expert insights", "Progress tracking"]
+    conversion_drivers: ["Comprehensive solutions", "Expert validation", "Long-term value", "Community support"]
+    churn_risk: "Low - Highly engaged and invested"
+    lifetime_value_multiplier: 1.5
+
+  quick_researchers:
+    name: "Quick Solution Seekers"
+    characteristics: ["Scan content quickly", "Search for specific solutions", "Click relevant links", "Download resources"]
+    preferences: ["Quick guides", "Checklists", "Problem-solution format", "Specific technique tutorials"]
+    journey_patterns: ["Fast path to decision", "Problem-focused content", "Urgent timeline", "Solution-specific research"]
+    communication_preferences: ["Concise content", "Direct answers", "Quick wins", "Practical tips"]
+    conversion_drivers: ["Immediate solutions", "Time savings", "Specific problem resolution", "Ease of implementation"]
+    churn_risk: "Medium - Problem-solved customers may leave"
+    lifetime_value_multiplier: 0.8
+
+  relationship_builders:
+    name: "Relationship-First Customers"
+    characteristics: ["Value personal connection", "Seek ongoing support", "Engage with community", "Read Adrian's story", "Attend events"]
+    preferences: ["Personal stories", "Adrian's insights", "Community interaction", "Ongoing support content"]
+    journey_patterns: ["Multiple consultation calls", "Community participation", "Event attendance", "Long nurturing period"]
+    communication_preferences: ["Personalized communication", "Adrian's direct engagement", "Community building", "Trust-building content"]
+    conversion_drivers: ["Personal connection", "Trust in Adrian's expertise", "Community belonging", "Long-term support"]
+    churn_risk: "Low - Strong relationship ties"
+    lifetime_value_multiplier: 2.0
+
+  strategic_planners:
+    name: "Strategic Planning Customers"
+    characteristics: ["Chorus leadership positions", "Budget planning cycles", "Seasonal preparation", "Organizational decision making"]
+    preferences: ["Business case content", "Strategic planning guides", "Organizational implementation", "ROI calculations"]
+    journey_patterns: ["Quarterly planning cycles", "Multiple stakeholders", "Budget approval processes", "Annual program planning"]
+    communication_preferences: ["Professional tone", "Business-focused content", "Strategic insights", "Organizational case studies"]
+    conversion_drivers: ["Organizational impact", "Strategic value", "Team productivity", "Long-term transformation"]
+    churn_risk: "Very Low - High investment and organizational commitment"
+    lifetime_value_multiplier: 3.0
+
+# ============================================================================
+# PERSONALIZATION-TAKTIKEN
+# ============================================================================
+
+personalization_tactics:
+  content_relevance:
+    tactics:
+      - name: "Journey Stage Mapping"
+        description: "Map content to customer's current journey stage"
+        implementation: "Use customer_journey.yaml data to determine stage"
+        triggers: ["Email engagement patterns", "Product interest signals", "Purchase history"]
+      - name: "Behavioral Segmentation"
+        description: "Adapt content based on behavioral segment"
+        implementation: "Identify segment and select appropriate content angle"
+        metrics: ["Engagement rate", "Content type preference", "Journey progression speed"]
+
+  communication_personalization:
+    tactics:
+      - name: "Preferred Channel Detection"
+        description: "Use customer's preferred communication channels"
+        channels: ["Email", "Social Media", "Community", "Direct consultation"]
+        preference_signals: ["Open rates", "Click patterns", "Engagement timing"]
+      - name: "Timing Optimization"
+        description: "Send content at customer's optimal engagement times"
+        optimal_windows: ["Evening (7-9pm)", "Weekend mornings", "Lunch breaks (12-1pm)"]
+        testing_method: "A/B test send times for each segment"
+
+  content_adaptation:
+    tactics:
+      - name: "Progressive Disclosure"
+        description: "Gradually reveal more complex information based on engagement"
+        stages: ["Awareness → Consideration → Decision → Implementation"]
+        engagement_triggers: ["Email opens", "Link clicks", "Content downloads"]
+      - name: "Dynamic Content Blocks"
+        description: "Include relevant content blocks based on customer journey"
+        blocks: ["Educational", "Practical", "Success Story", "Next Steps"]
+        selection_logic: "Match block to journey stage and behavioral segment"
+
+# ============================================================================
+# JOURNEY-AUTOMATISIERUNG
+# ============================================================================
+
+journey_automation:
+  stage_detection:
+    algorithm: "behavioral_analysis"
+    signals: ["Content consumption patterns", "Email engagement metrics", "Website behavior tracking", "Purchase sequence analysis"]
+    confidence_threshold: 0.8
+    update_frequency: "daily"
+
+  personalization_engine:
+    content_selection: "behavioral_segment + journey_stage"
+    cta_optimization: "historical_conversion_data + segment_preferences"
+    timing_optimization: "engagement_pattern_analysis + time_zone_detection"
+    testing_framework: "A/B testing for content variations and timing"
+
+  cross_channel_coordination:
+    email_newsletter: "Trigger based on website behavior and engagement"
+    social_media: "Coordinate content themes across platforms"
+    community_platform: "Reflect newsletter and web content in community discussions"
+    sales_consultation: "Provide journey context for personalized consultation"
+
+# ============================================================================
+# DYNAMISCHE CTA-STRATEGIE
+# ============================================================================
+
+dynamic_cta_strategies:
+  awareness_stage_ctas:
+    educational_resources:
+      primary_cta: "Download CVT Basics Guide"
+      secondary_cta: "Watch Free Mini-Course"
+      urgency_elements: ["Limited time access", "Bonus resources included"]
+      value_proposition: "Start your CVT journey with expert guidance"
+
+    newsletter_signup:
+      primary_cta: "Join 5,000+ Chor Leaders Getting CVT Tips"
+      secondary_cta: "Get Weekly Chor Leadership Insights"
+      social_proof: ["Most popular newsletter for choir directors"]
+      benefit_highlights: ["Expert tips", "Case studies", "Free resources"]
+
+  consideration_stage_ctas:
+    trial_offers:
+      vocal_essentials_trial:
+        primary_cta: "Start 7-Day Free Trial"
+        secondary_cta: "Get instant access to first 3 modules"
+        urgency_elements: ["Trial ends in 7 days", "Limited time offer"]
+        conversion_optimization: ["Email follow-up sequence", "Progress tracking", "Support access"]
+        value_proposition: "Experience the complete CVT system risk-free"
+
+      pro_group_trial:
+        primary_cta: "Join Free Group Coaching Session"
+        secondary_cta: "Get Private Facebook Group Access"
+        social_proof: ["300+ choir leaders in group", "Active community"]
+        exclusivity_elements: ["Limited spots", "Expert coaching", "Peer learning"]
+
+  decision_stage_ctas:
+    purchase_incentives:
+      vocal_essentials_purchase:
+        primary_cta: "Get Started with VocalEssentials - Save 20%"
+        secondary_cta: "Add Pro Group for Advanced Techniques"
+        urgency_elements: ["Offer expires soon", "Price increasing soon"]
+        trust_elements: ["30-day guarantee", "Expert support", "Community access"]
+
+      pro_group_purchase:
+        primary_cta: "Join ProGroup Program - Transform Your Choir"
+        secondary_cta: "Get Personal Coaching Add-on"
+        investment_justification: ["ROI calculation", "Break-even analysis", "Success case studies"]
+        payment_options: ["Monthly payments", "Package deals", "Early bird pricing"]
+
+  retention_stage_ctas: []
+  progression_offers:
+    advanced_workshops:
+      primary_cta: "Upgrade to Advanced CVT Workshop Series"
+      secondary_cta:
+        label: "Get Private Mastermind Access"
+        progression_path: "Basic → Advanced → Expert → Master"
+        investment_ladder: ["€297 → €997 → €1,997"]
+        value_milestones: ["Skill certification", "Performance improvement", "Leadership recognition"]
+
+    community_leadership:
+      primary_cta: "Become ChorAccelerator Ambassador"
+      secondary_cta:
+        label: "Join Expert Panel for Product Development"
+        exclusivity_elements: ["Invitation-only program", "Direct access to Adrian", "Industry recognition"]
+        contribution_requirements: ["Case study contributions", "Referral program", "Community leadership"]
+
+# ============================================================================
+# KUNDEN-JOURNEY-TRIGGERS
+# ============================================================================
+
+customer_journey_triggers:
+  engagement_triggers:
+    high_engagement_events:
+      - name: "Multiple Content Downloads"
+        threshold: "5 downloads in 7 days"
+        action: "Send consideration-stage content with product recommendations"
+
+      - name: "Social Media Tagging"
+        threshold: "3 social mentions in 30 days"
+        action: "Send personalized outreach and offer expert consultation"
+
+  conversion_triggers:
+    cart_abandonment:
+      detection_method: "Exit intent detection + 30 minute inactivity"
+      action: "Send retargeting email with social proof and urgency"
+      follow_up_sequence: "24 hours → 72 hours → 7 days"
+
+    purchase_completion:
+      immediate_actions: ["Welcome email", "Onboarding materials", "Community invitation"]
+      journey_progression: "Move to retention stage immediately"
+      value_reinforcement: ["Purchase confirmation", "Bonus materials access"]
+
+  churn_prevention:
+    at_risk_identification:
+      signals: ["No engagement for 30 days", "Support ticket patterns", "Content consumption drop"]
+      action: "Proactive outreach with personalized re-engagement content"
+
+  reactivation_campaigns:
+    dormant_customers:
+      criteria: "No purchase or engagement in 90+ days"
+      strategy: ["Success story updates", "New feature announcements", "Special comeback offer"]
+      offer_type: "Access to updated content + personal consultation"
+
+# ============================================================================
+# DATEN-INTEGRATION (FÜR AGENTEN)
+# ============================================================================
+
+integration_requirements:
+  data_sources:
+    thrivecart_api:
+      integration_type: "Sales tracking and conversion data"
+      data_points: ["Purchase events", "Product performance", "Customer lifetime value", "Referral tracking"]
+      update_frequency: "real-time"
+      privacy_compliance: "GDPR compliant with customer consent"
+
+    brevo_api:
+      integration_type: "Email engagement and segmentation"
+      data_points: ["Open rates", "Click rates", "Segment performance", "Automation triggers"]
+      update_frequency: "daily sync"
+      personalization_features: ["Behavioral triggers", "Journey stage content"]
+
+    google_analytics:
+      integration_type: "Website behavior and conversion tracking"
+      data_points: ["Page views", "Time on page", "Conversion paths", "Content performance"]
+      update_frequency: "daily batch processing"
+      attribution_model: "Multi-touch attribution for customer journey"
+
+  webhook_configuration:
+    thrivecart_webhooks:
+      events: ["order.created", "order.completed", "subscription.created", "customer.updated"]
+      processing: "Real-time customer journey updates"
+      security: "Signed webhook URLs with IP whitelisting"
+
+    automation_workflows:
+      - trigger_logic: "Customer journey stage changes"
+        content_selection: "Behavioral segment + stage-appropriate content"
+        cta_personalization: "Dynamic CTA based on customer data and journey position"
+
+# ============================================================================
+# PERFORMANCE-MESSUNG (FÜR JOURNEY-OPTIMIERUNG)
+# ============================================================================
+
+journey_performance_metrics:
+  stage_conversion_rates:
+    - awareness_to_consideration: "Track newsletter signup to trial enrollment rate"
+      target_benchmark: "15-20%"
+      optimization_focus: ["Newsletter content", "Signup process", "Initial engagement"]
+    - consideration_to_decision: "Track trial participation to purchase conversion"
+      target_benchmark: "20-25%"
+      optimization_focus: ["Trial experience", "Product demonstration", "Value proposition clarity"]
+    - customer_lifetime_value:
+        clv_by_segment:
+          content_consumers: "€3,000-5,000"
+          relationship_builders: "€5,000-8,000"
+          strategic_planners: "€10,000-20,000"
+
+        clv_optimization_strategies:
+          - "Increase repeat purchases through community and progression"
+          - "Improve retention with personalized support and advanced offerings"
+          - "Maximize lifetime value through premium upgrades and referrals"
+
+  journey_effectiveness:
+    touchpoint_optimization:
+      metric: "Cost per touchpoint and touchpoint effectiveness"
+      analysis: "Channel-specific engagement rates and conversion costs"
+
+    content_performance:
+      metric: "Stage-specific content performance and engagement"
+      analysis: "Content types and formats that drive progression to next stage"
+
+# ============================================================================
+# DATENSCHUTZ- UND PRIVACY
+# ============================================================================
+
+data_protection:
+  gdpr_compliance:
+    consent_management: "Explicit consent for data processing and personalization"
+    data_minimization: "Collect only necessary data for personalization"
+    right_to_access: "Customer right to access, modify, and delete personal data"
+    anonymization: "Aggregate data anonymized for analysis without personal identifiers"
+
+  security_measures:
+    encryption: "All customer data encrypted at rest and in transit"
+    access_controls: "Role-based access to customer journey data"
+    audit_logging: "Comprehensive logging of data access and modifications"
+
+  data_retention:
+    customer_data: "2 years post-last-activity or as required by law"
+    journey_logs: "3 years for operational analytics, then anonymized"
+    automated_deletion: "Automatic deletion of expired or withdrawn consent data"
+# ---
+# **IMPORTANT**: This file provides the foundation for dynamic, personalized customer journey management. All agents must integrate with this system to deliver contextually relevant content that drives customer progression through Adrian's value ladder.
+
+# **Usage Instructions for Agents:**
+# 1. Always check customer journey stage before content creation
+# 2. Use behavioral segmentation for content personalization
+# 3. Apply dynamic CTA strategies based on journey position
+# 4. Update customer journey data with each interaction
+# 5. Maintain GDPR compliance in all personalization activities
+# 6. Track journey performance metrics for continuous optimization
+
+# **Last Updated**: 2025-10-22 by Adrian Goldner
+# **Next Review**: Monthly or after major business changes

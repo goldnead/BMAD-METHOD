@@ -1,0 +1,70 @@
+# Content Creation Workflow Configuration
+name: "content-creation"
+description: "Interview-basierter Content-Produktions-Workflow mit KI-Agenten-Flotte für Newsletter und SEO-Artikel"
+author: "Adrian Goldner"
+
+# Critical variables from config
+config_source: "{project-root}/bmad/cflow/config.yaml"
+output_folder: "{config_source}:output_folder"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Required Data Files
+topic_map: "{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml"
+tone_of_voice_guide: "{project-root}/bmad/cflow/data/tone-of-voice-guide.md"
+gsc_data: "{project-root}/bmad/cflow/data/gsc-exports/latest.csv"
+authenticity_scorer: "{project-root}/bmad/cflow/tasks/authenticity-scorer.xml"
+
+# Recommended inputs for context
+recommended_inputs:
+  - previous_interviews: "{project-root}/bmad/cflow/data/interviews/"
+  - published_articles: "{project-root}/bmad/cflow/data/published/"
+  - analytics_data: "{project-root}/bmad/cflow/data/analytics/"
+
+# Module path and component files
+installed_path: "{project-root}/bmad/cflow/workflows/content-creation"
+template: false # Action workflow - no template needed
+instructions: "{installed_path}/instructions.md"
+validation: "{installed_path}/checklist.md"
+
+# Output configuration
+interview_protocol: "{output_folder}/interview-protocol-{date}.md"
+newsletter_draft: "{output_folder}/newsletter-draft-{date}.md"
+seo_article_draft: "{output_folder}/seo-article-draft-{date}.md"
+validation_report: "{output_folder}/validation-report-{date}.md"
+publishing_log: "{output_folder}/publishing-log-{date}.md"
+
+# Tool Requirements
+required_tools:
+  - "Telegram Bot":
+      description: "Für die Interview-Phase mit dem User"
+      setup_link: "https://core.telegram.org/bots#creating-a-new-bot"
+  - "Webflow API":
+      description: "Für das Publishing von SEO-Artikeln"
+      setup_link: "https://developers.webflow.com/"
+  - "Brevo API":
+      description: "Für den Newsletter-Versand"
+      setup_link: "https://developers.brevo.com/"
+  - "Google Search Console API":
+      description: "Für die Keyword-Analyse und Index-Request"
+      setup_link: "https://developers.google.com/webmaster-tools/v1/how-tos/authorizing"
+
+# Workflow-specific settings
+max_validation_iterations: 2
+authenticity_min_score: 71
+interview_platform: "telegram" # telegram | notion | manual
+auto_schedule_social: false
+# Web Bundle Configuration (optional)
+# web_bundle:
+#   name: 'content-creation'
+#   description: 'Interview-basierter Content-Produktions-Workflow'
+#   author: 'Adrian Goldner'
+#   instructions: 'bmad/cflow/workflows/content-creation/instructions.md'
+#   validation: 'bmad/cflow/workflows/content-creation/checklist.md'
+#   web_bundle_files:
+#     - 'bmad/cflow/workflows/content-creation/instructions.md'
+#     - 'bmad/cflow/workflows/content-creation/checklist.md'
+#     - 'bmad/cflow/data/topic-maps/topic-map-master.yaml'
+#     - 'bmad/cflow/data/tone-of-voice-guide.md'
+#     - 'bmad/cflow/tasks/authenticity-scorer.xml'

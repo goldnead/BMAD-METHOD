@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="newsletter-generator" name="Newsletter Content Generator" version="1.0.0-alpha" author="Adrian Goldner">
+  <description>
+    Creates newsletter content from interview protocols following Adrian's authentic tone of voice.
+    Transforms interview insights into engaging, personal newsletter posts that build community and drive conversions.
+
+    This task:
+    1. Extracts key insights and stories from interview protocols
+    2. Structures content for newsletter format (personal + actionable)
+    3. Applies Adrian's 161-line tone of voice guide
+    4. Integrates choir director-specific context and challenges
+    5. Includes appropriate CTAs for CVT funnel progression
+  </description>
+
+  <!-- Required input files -->
+  <inputs>
+    <input name="interview-protocol" required="true" description="Interview protocol with Q&A transcript"/>
+    <input name="target-audience" required="true" default="choir-directors" description="Newsletter target audience"/>
+    <input name="tone-of-voice" required="false" default="bmad/cflow/data/tone-of-voice-guide.md" description="Adrian's voice guide"/>
+    <input name="newsletter-length" required="false" default="medium" description="Newsletter length: short/medium/long"/>
+    <input name="cta-type" required="false" default="value-first" description="CTA strategy: value-first/direct/soft/educational"/>
+    <input name="topic-angle" required="true" description="Main topic angle for the newsletter"/>
+  </inputs>
+
+  <!-- Context files for content generation -->
+  <context>
+    <file name="tone-of-voice" path="{tone-of-voice}" description="Adrian's communication style and voice patterns"/>
+    <file name="audience-profile" path="bmad/cflow/data/audience-profile.yaml" description="Choir director demographics and challenges"/>
+    <file name="cta-templates" path="bmad/cflow/config/cta-templates.yaml" description="Pre-written CTA templates for different funnel stages"/>
+    <file name="newsletter-structure" path="bmad/cflow/config/newsletter-structure.yaml" description="Newsletter format and section templates"/>
+  </context>
+
+  <!-- Output configuration -->
+  <outputs>
+    <output name="newsletter-draft" path="{output-folder}/newsletter-draft-{timestamp}.md" format="markdown" description="Complete newsletter ready for review"/>
+    <output name="newsletter-preview" path="{output-folder}/newsletter-preview-{timestamp}.html" format="html" description="HTML preview for testing"/>
+    <output name="newsletter-metadata" path="{output-folder}/newsletter-metadata-{timestamp}.yaml" format="yaml" description="Newsletter metadata and CTA tracking"/>
+  </outputs>
+
+  <!-- Newsletter generation logic -->
+  <instructions>
+    <step id="analyze-interview">
+      <action>parse_protocol</action>
+      <input>{interview-protocol}</input>
+      <parameters>
+        <param name="extract">key-insights, stories, actionable-tips, expert-opinions</param>
+        <param name="context">CVT-choir-management</param>
+        <param name="audience">choir-directors</param>
+      </parameters>
+    </step>
+
+    <step id="identify-core-message">
+      <action>extract_core</action>
+      <criteria>
+        <criterion>Single main insight or revelation</criterion>
+        <criterion>Personal story or experience that illustrates the insight</criterion>
+        <criterion>Practical application for choir directors</criterion>
+        <criterion>Emotional connection point with audience challenges</criterion>
+      </criteria>
+    </step>
+
+    <step id="structure-newsletter">
+      <action>create_structure</action>
+      <template>
+        <section name="opening">
+          <purpose>Grab attention with personal hook</purpose>
+          <elements>
+            <element>Personal greeting with name (if available)</element>
+            <element>Opening hook - personal experience or surprising insight</element>
+            <element>Context setting - why this matters now</element>
+          </elements>
+          <length>2-3 sentences</length>
+        </section>
+
+        <section name="story">
+          <purpose>Illustrate core message with authentic story</purpose>
+          <elements>
+            <element>Personal experience or choir case study</element>
+            <element>Specific challenge faced by choir directors</element>
+            <element>Emotional journey and breakthrough moment</element>
+            <element>Concrete details and sensory descriptions</element>
+          </elements>
+          <length>3-4 paragraphs</length>
+        </section>
+
+        <section name="expertise">
+          <purpose>Share professional insights and actionable advice</purpose>
+          <elements>
+            <element>3-5 specific, actionable tips</element>
+            <element>Step-by-step process where applicable</element>
+            <element>Common mistakes to avoid</element>
+            <element>Quick wins for immediate implementation</element>
+          </elements>
+          <length>4-5 paragraphs</length>
+        </section>
+
+        <section name="application">
+          <purpose>Show how to apply insights in choir context</purpose>
+          <elements>
+            <element>Specific choir rehearsal application</element>
+            <element>Time constraints and solutions</element>
+            <element>Group exercises or techniques</element>
+            <element>Expected results and timeline</element>
+          </elements>
+          <length>2-3 paragraphs</length>
+        </section>
+
+        <section name="cta">
+          <purpose>Drive appropriate conversion action</purpose>
+          <elements>
+            <element>Reinforce value proposition</element>
+            <element>Clear, single CTA based on funnel stage</element>
+            <element>Urgency or incentive where appropriate</element>
+            <element>Supporting resources or next steps</element>
+          </elements>
+          <length>1-2 paragraphs</length>
+        </section>
+
+        <section name="closing">
+          <purpose>Personal sign-off and relationship building</purpose>
+          <elements>
+            <element>Encouraging final thought</element>
+            <element>Question for engagement/reply</element>
+            <element>Personal sign-off in Adrian's voice</element>
+          </elements>
+          <length>1-2 paragraphs</length>
+        </section>
+      </template>
+    </step>
+
+    <step id="apply-adrian-voice">
+      <action>apply_voice_patterns</action>
+      <voice-elements>
+        <element type="personal-phrases">
+          <patterns>
+            <pattern>Was ich aus meiner Erfahrung gelernt habe...</pattern>
+            <pattern>Bei mir hat sich bewährt...</pattern>
+            <pattern>Ich muss zugeben...</pattern>
+            <pattern>Ehrlich gesagt...</pattern>
+            <pattern>Wenn ich zurückblicke auf...</pattern>
+          </patterns>
+        </element>
+
+        <element type="helpful-phrases">
+          <patterns>
+            <pattern>Was ich dir empfehlen würde...</pattern>
+            <pattern>Lass mich dir zeigen, wie...</pattern>
+            <pattern>Hier ist mein bester Tip...</pattern>
+            <pattern>Was für mich funktioniert hat...</pattern>
+            <pattern>Ein Fehler, den ich oft sehe...</pattern>
+          </patterns>
+        </element>
+
+        <element type="conversational-style">
+          <patterns>
+            <pattern>Du wirst überrascht sein...</pattern>
+            <pattern>Stell dir vor...</pattern>
+            <pattern>Was denkst du darüber?</pattern>
+            <pattern>Hast du schon mal erlebt...</pattern>
+          </patterns>
+        </element>
+
+        <element type="structure-elements">
+          <patterns>
+            <pattern>Frage-Antwort Format</pattern>
+            <pattern>Schritt-für-Schritt Listen</pattern>
+            <pattern>Vorher-Nachher Vergleiche</pattern>
+            <pattern>Quick Wins Box</pattern>
+          </patterns>
+        </element>
+      </voice-elements>
+    </step>
+
+    <step id="generate-cta">
+      <action>create_cta</action>
+      <strategy>{cta-type}</strategy>
+      <templates>
+        <template name="value-first">
+          <pre-text>Mir ist bewusst, dass du als Chorleiter:in wenig Zeit hast. Deshalb habe ich...</pre-text>
+          <cta-phrase>Hier ist der schnelle Weg zu mehr Informationen:</cta-phrase>
+          <value-proposition>Spare 20 Stunden Recherche - die wichtigsten CVT-Techniken direkt zum Anwenden</value-proposition>
+        </template>
+
+        <template name="educational">
+          <pre-text>Wenn du dieses Thema vertiefen möchtest, habe ich etwas für dich vorbereitet...</pre-text>
+          <cta-phrase>Entdecke die 7 CVT-Geheimnisse für chorische Stimmbildung:</cta-phrase>
+          <value-proposition>Komplett mit Notenbeispielen und Übungsanleitungen</value-proposition>
+        </template>
+
+        <template name="soft">
+          <pre-text>Wenn du neugierig geworden bist...</pre-text>
+          <cta-phrase>Schau dir hier mal an, wie ich diese Techniken unterrichte:</cta-phrase>
+          <value-proposition>Keine Verpflichtung, nur reine Inspiration</value-proposition>
+        </template>
+
+        <template name="direct">
+          <pre-text>Willst du sofort mit der Umsetzung starten?</pre-text>
+          <cta-phrase>Jetzt zum VocalEssentials Kurs anmelden:</cta-phrase>
+          <value-proposition>Beginn noch diese Woche - 30-Tage-Geld-zurück-Garantie</value-proposition>
+        </template>
+      </templates>
+    </step>
+
+    <step id="create-personalization">
+      <action>add_personal_elements</action>
+      <elements>
+        <element>Recent choir experience or rehearsal observation</element>
+        <element>Current challenge you're working with in CVT</element>
+        <element>Specific choir you work with or recent workshop</element>
+        <element>Personal reflection or learning moment</element>
+      </elements>
+    </step>
+
+    <step id="optimize-for-delivery">
+      <action>format_newsletter</action>
+      <optimizations>
+        <optimization>Short paragraphs (2-3 sentences max)</optimization>
+        <optimization>Bold text for emphasis on key points</optimization>
+        <optimization>Bullet points or numbered lists for tips</optimization>
+        <optimization>Subheadings for scannability</optimization>
+        <optimization>Personal greeting and sign-off</optimization>
+        <optimization>Single, clear CTA</optimization>
+        <optimization>Mobile-friendly formatting</optimization>
+      </optimizations>
+    </step>
+
+    <step id="create-metadata">
+      <action>generate_yaml</action>
+      <content>
+        newsletter_metadata:
+          topic_angle: {topic-angle}
+          target_audience: {target-audience}
+          content_type: newsletter
+          word_count: {generated-word-count}
+          estimated_read_time: "{read-time} minutes"
+          cta_type: {cta-type}
+          primary_cta: {generated-cta}
+          cta_destination: [link-destination]
+          engagement_hooks: [generated-questions]
+          personal_stories: [extracted-stories]
+          actionable_tips: [generated-tips]
+          generated_date: {current-datetime}
+          voice_alignment: {alignment-score}
+      </content>
+    </step>
+
+    <step id="validate-content">
+      <action>validate_newsletter</action>
+      <criteria>
+        <criterion>Personal hook grabs attention in first 10 seconds</criterion>
+        <criterion>Contains authentic personal story or experience</criterion>
+        <criterion>Provides 3+ actionable tips for choir directors</criterion>
+        <criterion>Follows Adrian's tone of voice guide consistently</criterion>
+        <criterion>Has single, clear call-to-action</criterion>
+        <criterion>Readable on mobile devices</criterion>
+        <criterion>Length appropriate for target audience (500-800 words)</criterion>
+      </criteria>
+    </step>
+  </instructions>
+
+  <!-- Error handling -->
+  <error_handling>
+    <error type="missing-interview">
+      <action>prompt_for_input</action>
+      <message>Interview protocol is required to generate newsletter content.</message>
+    </error>
+
+    <error type="insufficient-content">
+      <action>use_enhancement</action>
+      <message>Interview content seems limited - using enhancement templates for richer content.</message>
+    </error>
+
+    <error type="tone-mismatch">
+      <action>apply_correction</action>
+      <message>Content doesn't match Adrian's voice profile - applying voice correction.</message>
+    </error>
+
+    <error type="cta-generation-failed">
+      <action>use_default_cta</action>
+      <message>Using default value-first CTA template.</message>
+    </error>
+  </error_handling>
+
+  <!-- Success criteria -->
+  <success_criteria>
+    <criterion>Newsletter structured with all 6 sections (opening, story, expertise, application, cta, closing)</criterion>
+    <criterion>Content follows Adrian's tone of voice guide patterns</criterion>
+    <criterion>Includes authentic personal story or experience</criterion>
+    <criterion>Provides actionable advice for choir directors</criterion>
+    <criterion>Has appropriate CTA for funnel stage</criterion>
+    <criterion>Length between 500-800 words</criterion>
+    <criterion>Metadata and HTML preview generated</criterion>
+  </success_criteria>
+</task>

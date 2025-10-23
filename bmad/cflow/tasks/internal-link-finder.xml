@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="cflow-internal-link-finder" version="1.0">
+  <metadata>
+    <name>Internal Link Finder</name>
+    <description>Analyzes article content and finds relevant internal linking opportunities from published articles</description>
+    <author>Adrian Goldner</author>
+    <module>cflow</module>
+    <complexity>standard</complexity>
+  </metadata>
+
+  <inputs>
+    <input name="article_content" type="string" required="true">
+      <description>The article draft content to analyze</description>
+    </input>
+
+    <input name="article_topic" type="string" required="true">
+      <description>The main topic/keyword of the current article</description>
+    </input>
+
+    <input name="published_articles_index" type="file" required="true">
+      <description>Path to published articles index (YAML or JSON)</description>
+      <default>{project-root}/bmad/cflow/data/published/articles-index.yaml</default>
+      <format>
+        articles:
+          - title: "Article Title"
+            url: "/blog/article-slug"
+            topic: "Main Topic"
+            keywords: ["keyword1", "keyword2", "keyword3"]
+            published_date: "2025-01-15"
+            pillar: "Pillar Name" (optional)
+      </format>
+    </input>
+
+    <input name="topic_map" type="file" required="false">
+      <description>Optional: Topic map for understanding topic clusters</description>
+      <default>{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml</default>
+    </input>
+
+    <input name="max_suggestions" type="number" required="false">
+      <description>Maximum number of internal link suggestions to return</description>
+      <default>5</default>
+    </input>
+
+    <input name="min_relevance_score" type="number" required="false">
+      <description>Minimum relevance score (0-100) for suggestions</description>
+      <default>60</default>
+    </input>
+  </inputs>
+
+  <outputs>
+    <output name="link_suggestions" type="array">
+      <description>Array of internal link suggestions with relevance scores</description>
+      <structure>
+        - article_title: string
+        - article_url: string
+        - anchor_text_suggestions: array of strings
+        - relevance_score: number (0-100)
+        - placement_recommendation: string
+        - reasoning: string
+      </structure>
+    </output>
+
+    <output name="summary_report" type="markdown">
+      <description>Formatted report with linking recommendations</description>
+    </output>
+  </outputs>
+
+  <instructions>
+    <step n="1">
+      <action>Load published articles index</action>
+      <details>
+        - Read published_articles_index file
+        - Parse YAML/JSON structure
+        - Extract all articles with metadata
+        - If file doesn't exist, return empty suggestions with warning
+      </details>
+    </step>
+
+    <step n="2">
+      <action>Load topic map (if provided)</action>
+      <details>
+        - Understand topic clusters and pillars
+        - Identify which pillar the current article belongs to
+        - This helps prioritize cluster-internal linking
+      </details>
+    </step>
+
+    <step n="3">
+      <action>Analyze current article content</action>
+      <details>
+        - Extract key concepts and entities mentioned
+        - Identify section topics
+        - Look for natural linking opportunities (questions, examples, references)
+      </details>
+    </step>
+
+    <step n="4">
+      <action>Calculate relevance scores for each published article</action>
+      <scoring-algorithm>
+        For each published article:
+
+        1. Semantic Relevance (0-40 points)
+           - Check keyword overlap between articles
+           - Analyze topic similarity
+           - Consider mentioned concepts
+
+        2. Topic Cluster Proximity (0-25 points)
+           - Same pillar: +25 points
+           - Related cluster: +15 points
+           - Different pillar: +5 points
+
+        3. Contextual Fit (0-20 points)
+           - Article naturally mentioned in content: +20
+           - Related concept discussed: +15
+           - Tangentially related: +10
+           - Forced connection: +5
+
+        4. SEO Value (0-15 points)
+           - Links to pillar page: +15
+           - Links to underperforming article: +10
+           - Links to new article (< 3 months): +5
+           - Links to established article: +8
+
+        TOTAL: Sum all points, cap at 100
+      </scoring-algorithm>
+    </step>
+
+    <step n="5">
+      <action>Generate anchor text suggestions</action>
+      <guidelines>
+        - Use natural, contextual anchor text (not exact match keywords)
+        - Suggest 2-4 variations per link
+        - Prefer longer, descriptive anchors
+        - Avoid generic anchors like "hier" or "dieser Artikel"
+
+        Examples of GOOD anchors:
+        - "strukturierte Interview-Techniken"
+        - "wie du authentischen Content erstellst"
+        - "mein Guide zu SEO-Topic-Clustern"
+
+        Examples of BAD anchors:
+        - "klick hier"
+        - "mehr Infos"
+        - exact keyword stuffing
+      </guidelines>
+    </step>
+
+    <step n="6">
+      <action>Determine optimal placement for each link</action>
+      <placement-strategy>
+        - Early content (first 300 words): High-priority pillar links
+        - Mid content: Related cluster articles
+        - End content: Deep-dive resources, related topics
+        - Sidebars/callouts: Complementary content
+
+        Avoid:
+        - More than 2 internal links in same paragraph
+        - Links in first sentence
+        - Link clusters (3+ links in 100 words)
+      </placement-strategy>
+    </step>
+
+    <step n="7">
+      <action>Filter and rank suggestions</action>
+      <details>
+        - Remove suggestions below min_relevance_score
+        - Sort by relevance score (highest first)
+        - Limit to max_suggestions count
+        - Ensure diversity (don't suggest 5 articles from same cluster)
+      </details>
+    </step>
+
+    <step n="8">
+      <action>Generate summary report</action>
+      <template>
+# Internal Linking Recommendations
+
+**Article:** {article_topic}
+**Date:** {current_date}
+**Total Suggestions:** {count}
+
+---
+
+## 🔗 Link Suggestions (Ranked by Relevance)
+
+{for each suggestion in link_suggestions:
+
+### {rank}. {article_title} (Score: {relevance_score}/100)
+
+**URL:** `{article_url}`
+
+**Anchor Text Options:**
+1. "{anchor_option_1}"
+2. "{anchor_option_2}"
+3. "{anchor_option_3}"
+
+**Recommended Placement:** {placement_recommendation}
+
+**Why this link?**
+{reasoning}
+
+---
+}
+
+## 📊 Linking Strategy Summary
+
+- **Pillar Links:** {count_pillar_links}
+- **Cluster Links:** {count_cluster_links}
+- **Related Links:** {count_related_links}
+
+## 💡 Implementation Tips
+
+1. Add links naturally during editing, not all at once
+2. Prioritize the top 2-3 suggestions for best SEO impact
+3. Update linked articles with reciprocal links when relevant
+4. Check that link URLs are current and working
+
+---
+
+**Next Steps:**
+- Review suggestions
+- Integrate top 2-3 links into article
+- Update articles-index.yaml after publishing
+      </template>
+    </step>
+
+    <step n="9">
+      <action>Return outputs</action>
+      <outputs>
+        - link_suggestions: {array_of_suggestions}
+        - summary_report: {markdown_report}
+      </outputs>
+    </step>
+  </instructions>
+
+  <usage-example>
+    <scenario>
+      Find internal linking opportunities for a new SEO article
+    </scenario>
+    <code>
+      result = internal_link_finder.run(
+        article_content: draft_article,
+        article_topic: "Interview-basierte Content-Erstellung",
+        published_articles_index: "bmad/cflow/data/published/articles-index.yaml",
+        topic_map: "bmad/cflow/data/topic-maps/topic-map-master.yaml",
+        max_suggestions: 5,
+        min_relevance_score: 65
+      )
+
+      # Review top suggestions
+      puts result.summary_report
+
+      # Integrate top 2-3 links into article
+      integrate_links(result.link_suggestions[0..2])
+    </code>
+  </usage-example>
+
+  <best-practices>
+    <practice>Link to 2-4 internal articles per new article</practice>
+    <practice>Prioritize links to pillar pages for topic authority</practice>
+    <practice>Use diverse, natural anchor text</practice>
+    <practice>Update articles-index.yaml after each publication</practice>
+    <practice>Run this task BEFORE finalizing article for publication</practice>
+    <practice>Balance SEO goals with genuine reader value</practice>
+  </best-practices>
+
+  <notes>
+    - This task can be invoked by the Content-Writer agent
+    - Requires maintaining an up-to-date articles-index.yaml
+    - Works best with 10+ published articles
+    - Should be run after article draft is complete
+    - Consider reciprocal linking in older articles
+  </notes>
+</task>

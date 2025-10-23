@@ -1,0 +1,73 @@
+# Social Repurposing Workflow Configuration
+name: "social-repurposing"
+description: "Automatisches Repurposing von veröffentlichten Artikeln zu 5 Social-Media-Assets mit Multi-Platform Scheduling"
+author: "Adrian Goldner"
+
+# Critical variables from config
+config_source: "{project-root}/bmad/cflow/config.yaml"
+output_folder: "{config_source}:output_folder"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Required Data Files
+latest_article: "{project-root}/bmad/cflow/data/published/latest-article.md"
+publishing_log: "{project-root}/bmad/cflow/data/published/publishing-log-latest.md"
+social_templates: "{project-root}/bmad/cflow/templates/social/"
+
+# Recommended inputs for context
+recommended_inputs:
+  - published_articles: "{project-root}/bmad/cflow/data/published/"
+  - social_media_performance: "{project-root}/bmad/cflow/data/analytics/social-performance.csv"
+  - platform_guidelines: "{project-root}/bmad/cflow/data/platform-guidelines/"
+
+# Module path and component files
+installed_path: "{project-root}/bmad/cflow/workflows/social-repurposing"
+template: false # Action workflow - no template needed
+instructions: "{installed_path}/instructions.md"
+validation: "{installed_path}/checklist.md"
+
+# Output configuration
+article_analysis: "{output_folder}/social-analysis-{date}.md"
+social_assets_draft: "{output_folder}/social-assets-{date}.md"
+social_scheduling_log: "{output_folder}/social-scheduling-{date}.md"
+
+# Tool Requirements
+required_tools:
+  - "Social Media Scheduler API":
+      description: "Für automatisches Scheduling von Social Posts (Publer/Metricool)"
+      setup_link: "https://metricool.com/api/ oder https://publer.io/api/"
+  - "Image Generation API":
+      description: "Für Social Media Asset Creation (Optional)"
+      setup_link: "Canva API, Midjourney API oder ähnlich"
+
+# Workflow-specific settings
+enable_user_review: true
+auto_schedule_social: true
+optimal_scheduling: true
+platform_specific_content: true
+
+# Social Platform Configuration
+social_platforms: ["linkedin", "instagram", "x", "facebook"]
+content_types:
+  linkedin: ["mini-post", "carousel"]
+  instagram: ["reel-script", "carousel", "quote"]
+  x: ["thread"]
+  facebook: ["story"]
+
+# Scheduling Preferences
+scheduling_strategy: "optimal-times" # optimal-times | immediate | custom
+time_zone: "Europe/Berlin"
+posting_frequency: "spread-over-3-days" # immediate | spread-over-3-days | custom
+
+# Content Guidelines
+max_post_length:
+  linkedin: 3000
+  instagram: 2200
+  x: 280
+  facebook: 63206
+
+# Hashtag Strategy
+auto_hashtags: true
+brand_hashtags: ["#ContentFlow", "#AIContent", "#AuthenticContent"]
+trending_hashtags: true

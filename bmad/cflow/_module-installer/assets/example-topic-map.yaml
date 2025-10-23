@@ -1,0 +1,247 @@
+# Example Topic Map - ContentFlow Module
+# This file shows the structure for organizing your SEO content strategy
+# Copy this to: bmad/cflow/data/topic-maps/topic-map-master.yaml
+
+# ============================================================================
+# TOPIC MAP STRUCTURE
+# ============================================================================
+#
+# Pillars = Main content hubs (2500+ words)
+# Clusters = Supporting articles (1000+ words)
+#
+# Each Pillar should have 8+ Cluster articles
+# Clusters link to their Pillar + 1-2 related Clusters
+#
+# ============================================================================
+
+pillars:
+  # ========================================
+  # PILLAR #1: Gesangstechnik & CVT im Chor
+  # ========================================
+  - id: pillar-001
+    name: "Gesangstechnik & CVT im Chor"
+    slug: "gesangstechnik-chor"
+    url: "/gesangstechnik-chor"
+    keyword_focus: "stimmtechnik"
+    funnel_phase: awareness
+    target_cta: "Newsletter-Opt-in"
+    description: "Wie kann man mit CVT und modernen Stimmtechniken als Chorsänger:in gesanglich sicherer, kräftiger und flexibler werden?"
+    status: published
+    published_date: "2025-09-15"
+    word_count: 2800
+
+    # Related Clusters (8+ empfohlen)
+    clusters:
+      - id: cluster-001
+        name: "Was ist Stimmtechnik wirklich – und warum sie dein Chorleben verändern kann"
+        slug: "stimmtechnik"
+        url: "/newsletter/stimmtechnik"
+        keyword: "stimmtechnik"
+        search_volume: 177
+        current_position: 8.37
+        current_ctr: 0.56
+        funnel_phase: awareness
+        target_cta: "Newsletter-Opt-in"
+        status: published
+        published_date: "2025-09-22"
+        word_count: 1200
+
+      - id: cluster-002
+        name: "Was dir eine Stimmanalyse verrät (und was nicht)"
+        slug: "stimmanalyse-online"
+        url: "/newsletter/stimmanalyse-online"
+        keyword: "stimmanalyse online"
+        search_volume: 98
+        current_position: 3.82
+        current_ctr: 11.22
+        funnel_phase: consideration
+        target_cta: "7€ Trial / Stimmanalyse Call"
+        status: published
+        published_date: "2025-09-29"
+        word_count: 1350
+
+      - id: cluster-003
+        name: "Wie du deine Stimme objektiv einschätzen lernst"
+        slug: "stimmanalyse"
+        url: "/newsletter/stimmanalyse"
+        keyword: "stimmanalyse"
+        search_volume: 349
+        current_position: 6.07
+        current_ctr: 1.43
+        funnel_phase: consideration
+        target_cta: "Trial oder VocalEssentials"
+        status: published
+        published_date: "2025-10-06"
+        word_count: 1180
+
+      - id: cluster-004
+        name: "Wenn die Stimme versagt – 5 Ursachen, die du nicht erwartest"
+        slug: "stimme-versagt-bei-hohen-toenen"
+        url: "/newsletter/stimme-versagt-bei-hohen-toenen"
+        keyword: "stimme versagt bei hohen tönen"
+        search_volume: 121
+        current_position: 10.84
+        current_ctr: 0.0
+        funnel_phase: awareness
+        target_cta: "Newsletter / Lead-Magnet"
+        status: draft
+        target_publish_date: "2025-10-13"
+
+      - id: cluster-005
+        name: "Was das Vokaltrapez über deine Stimme verrät"
+        slug: "vokaltrapez"
+        url: "/newsletter/vokaltrapez"
+        keyword: "vokaltrapez"
+        search_volume: 100
+        current_position: 16.59
+        current_ctr: 0.0
+        funnel_phase: awareness
+        target_cta: "Newsletter / CVT 101 Kurs"
+        status: planned
+
+      - id: cluster-006
+        name: "Die 5 effektivsten CVT-Übungen für Chorsänger:innen"
+        slug: "cvt-uebungen"
+        url: "/newsletter/cvt-uebungen"
+        keyword: "cvt übungen"
+        search_volume: 92
+        current_position: 41.27
+        current_ctr: 0.0
+        funnel_phase: consideration
+        target_cta: "7€ Trial"
+        status: planned
+
+      - id: cluster-007
+        name: "Zu viel oder zu wenig Stütze? So erkennst du dein Gleichgewicht"
+        slug: "zu-viel-zu-wenig-stuetze"
+        url: "/newsletter/zu-viel-zu-wenig-stuetze"
+        keyword: "zu viel oder zu wenig stütze"
+        funnel_phase: consideration
+        target_cta: "VocalEssentials Trial / Pay Now"
+        status: planned
+
+      - id: cluster-008
+        name: "Warum sich dein Proben-Mindset auf deine Stimme überträgt"
+        slug: "probe-wie-ueben"
+        url: "/newsletter/probe-wie-ueben"
+        keyword: "ich probe wie ich übe"
+        funnel_phase: retention
+        target_cta: "ProGroup / Coaching"
+        status: planned
+
+  # ========================================
+  # PILLAR #2: Blending & Intonation
+  # ========================================
+  - id: pillar-002
+    name: "Blending & Intonation im Chor"
+    slug: "blending-intonation"
+    url: "/blending-intonation"
+    keyword_focus: "blending chor"
+    funnel_phase: awareness
+    target_cta: "Newsletter-Opt-in / Mini-Kurs"
+    description: "Wie schaffen Chöre einen homogenen, intonationssicheren Gesamtklang – ohne dass Einzelstimmen an Ausdruck verlieren?"
+    status: planned
+    target_publish_date: "2025-10-20"
+
+    clusters:
+      - id: cluster-009
+        name: "Warum sich manche Stimmen im Chor nicht mischen"
+        slug: "stimmen-nicht-mischen"
+        url: "/newsletter/stimmen-nicht-mischen"
+        keyword: "warum sich manche stimmen nicht mischen"
+        funnel_phase: awareness
+        target_cta: "Newsletter-Opt-in"
+        status: planned
+
+      - id: cluster-010
+        name: "Unsaubere Intonation ist nur ein Symptom – worauf es wirklich ankommt"
+        slug: "unsaubere-intonation"
+        url: "/newsletter/unsaubere-intonation"
+        keyword: "unsaubere intonation ist oft nur ein symptom"
+        funnel_phase: awareness
+        target_cta: "Free Mini-Kurs"
+        status: planned
+
+      # ... weitere 6+ Cluster für Pillar #2
+
+# ============================================================================
+# INTERNAL LINKING STRATEGY
+# ============================================================================
+
+# Jeder Cluster-Artikel sollte verlinken zu:
+# 1. Seinem Pillar-Artikel (immer!)
+# 2. 1-2 verwandten Cluster-Artikeln (thematisch passend)
+
+# Pillar-Artikel verlinken zu:
+# - Allen ihren Cluster-Artikeln (Inhaltsverzeichnis)
+# - Verwandten Pillar-Artikeln (Cross-Pillar-Links)
+
+# ============================================================================
+# FUNNEL-PHASE DEFINITIONS
+# ============================================================================
+
+funnel_phases:
+  awareness:
+    description: "Leser wird auf Problem aufmerksam"
+    typical_ctas:
+      - "Newsletter-Opt-in"
+      - "Lead-Magnet (Free Mini-Kurs)"
+      - "Kostenlose Ressource"
+
+  consideration:
+    description: "Leser evaluiert Lösungen"
+    typical_ctas:
+      - "7€ Trial"
+      - "Stimmanalyse Call"
+      - "VocalEssentials Trial"
+
+  conversion:
+    description: "Leser ist bereit zu kaufen"
+    typical_ctas:
+      - "VocalEssentials Pay Now"
+      - "ProGroup Membership"
+      - "Coaching-Paket"
+
+  retention:
+    description: "Bestehender Kunde, Upsell-Potenzial"
+    typical_ctas:
+      - "ProGroup Upgrade"
+      - "Coaching / Mentorship"
+
+# ============================================================================
+# STATUS DEFINITIONS
+# ============================================================================
+
+content_status:
+  planned: "Thema identifiziert, noch nicht gestartet"
+  draft: "Artikel wird gerade geschrieben"
+  review: "Artikel in Quality-Validation"
+  published: "Live auf Website"
+  archived: "Alt, nicht mehr aktiv promoted"
+
+# ============================================================================
+# METADATA FOR SEO-STRATEGIST AGENT
+# ============================================================================
+
+seo_tracking:
+  last_gsc_sync: "2025-10-22"
+  total_keywords_tracked: 42
+  total_articles_published: 8
+  avg_position: 12.3
+  avg_ctr: 2.1
+
+quick_wins:
+  # Keywords mit hoher Impression + niedrige CTR = Optimierungs-Potenzial
+  - keyword: "stimmanalyse online"
+    impressions: 98
+    clicks: 11
+    ctr: 11.22
+    position: 3.82
+    opportunity: "Bereits Top-3, CTR-Boost durch besseres Snippet"
+
+  - keyword: "stimmanalyse"
+    impressions: 349
+    clicks: 5
+    ctr: 1.43
+    position: 6.07
+    opportunity: "Hohe Impressions, Meta-Title optimieren"

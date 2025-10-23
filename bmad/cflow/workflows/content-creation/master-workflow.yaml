@@ -1,0 +1,560 @@
+# MASTER CONTENT CREATION WORKFLOW
+# Full Automation - Von Topic-Auswahl bis Multi-Platform Publishing
+# Adrian Goldner - ContentFlow Module v1.0.0-alpha
+
+name: "master-content-creation"
+description: "Vollautomatisierter Content-Creation Workflow von Topic-Auswahl bis Multi-Platform Publishing. Ein Klick = kompletter Artikel-Pipeline."
+
+# Konfiguration
+config_source: "{project-root}/bmad/cflow/config.yaml"
+output_folder: "{config_source}:output_folder"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+
+# Automatisierungs-Level
+automation_level: "semi-auto" # Nur finale Freigabe durch Adrian
+
+# Business-Kontext laden
+business_context:
+  business_model: "{project-root}/tmp/business-model.md"
+  seo_masterplan: "{project-root}/tmp/seo-masterplan/"
+  funnel_architecture: "{project-root}/tmp/funnel-architecture.md"
+  target_audience: "{project-root}/tmp/target-audience.md"
+  tone_of_voice: "{project-root}/tmp/tone-of-voice.md"
+
+# Content-Datenquellen
+data_sources:
+  topic_map: "{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml"
+  expertise_areas: "{project-root}/bmad/cflow/data/expertise-areas.yaml"
+  interview_archive: "{project-root}/bmad/cflow/data/interviews/"
+  published_articles: "{project-root}/bmad/cflow/data/published/"
+  analytics_data: "{project-root}/bmad/cflow/data/analytics/"
+
+# Content-Production-Kette (vollautomatisiert)
+content_pipeline:
+  # STEP 1: Topic-Auswahl (automatisch oder manuell)
+  topic_selection:
+    enabled: true
+    trigger_options:
+      - "auto_from_topic_map" # Automatisch nächste Priority aus Topic-Map
+      - "auto_from_gsc_trends" # Basierend auf GSC-Trend-Analyse
+      - "manual_selection" # Manuelle Auswahl durch Adrian
+
+    auto_priority:
+      - quick_wins_first # Quick-Win Keywords zuerst
+      - funnel_stage_based # Aktuellster Funnel-Stage zuerst
+      - seasonal_adjustment # Saisonale Anpassungen
+
+    output:
+      selected_topic: "{output_folder}/selected-topic-{timestamp}.yaml"
+      topic_briefing: "{output_folder}/topic-briefing-{timestamp}.md"
+
+  # STEP 2: Interview-Vorbereitung (automatisch)
+  interview_preparation:
+    enabled: true
+    depends_on: "topic_selection_complete"
+
+    # Automatische Generierung basierend auf Topic
+    auto_question_generation:
+      agent: "connect-interview-specialist"
+      task: "question-generator"
+      template: "CVT-choirleader-specific"
+      question_count: 12-15
+      experience_integration: true
+
+    output:
+      interview_questions: "{output_folder}/interview-questions-{timestamp}.md"
+      interview_framework: "{output_folder}/interview-framework-{timestamp}.yaml"
+
+    # User-Eingabe-Optionen
+    input_channels:
+      primary: "telegram" # Telegram Bot für bequeme Antworten
+      secondary: "notion" # Notion-Alternative
+      fallback: "manual_input" # Direkteingabe in Claude
+
+  # STEP 3: Interview-Durchführung (semi-automatisiert)
+  interview_execution:
+    enabled: true
+    depends_on: "interview_questions_ready"
+
+    # Automatisierte Interview-Führung
+    automated_interviewing:
+      agent: "connect-interview-specialist"
+      mode: "conversational_ai"
+      follow_up_depth: 3 # Automatische Follow-up-Fragen
+      story_extraction: true # Persönliche Geschichten extrahieren
+
+    # Interview-Eingabe-Kanäle
+    input_methods:
+      telegram_bot:
+        enabled: true
+        bot_name: "AdrianInterviewBot"
+        message_handling: "save_to_interview_protocol"
+        notification: "interview_complete"
+
+      notion_database:
+        enabled: false # Zukünftige Erweiterung
+        database_id: "interview-protocols"
+
+      voice_input:
+        enabled: true
+        platform: "claude_code"
+        auto_transcription: true
+
+    output:
+      interview_protocol: "{output_folder}/interview-protocol-{timestamp}.md"
+      extracted_insights: "{output_folder}/extracted-insights-{timestamp}.yaml"
+
+  # STEP 4: Content-Generierung (vollautomatisiert)
+  content_generation:
+    enabled: true
+    depends_on: "interview_complete"
+
+    # Parallele Content-Erstellung
+    parallel_generation:
+      enabled: true
+      agents:
+        newsletter_agent: "forge-content-engineer"
+        seo_article_agent: "forge-content-engineer"
+        social_media_agent: "amplify-content-repurposing-artist"
+
+    # Newsletter-Generierung
+    newsletter_generation:
+      agent: "forge-content-engineer"
+      task: "newsletter-generator"
+      template: "newsletter-template.md"
+      tone_application: "adrian_voice_profile"
+      cta_strategy: "funnel_stage_adaptive"
+
+      # Automatische CTA-Logik
+      cta_automation:
+        funnel_stage_detection: true
+        product_matching: true
+        urgency_elements: true
+        a_b_testing: true
+
+    output:
+      newsletter_draft: "{output_folder}/newsletter-draft-{timestamp}.md"
+      newsletter_html: "{output_folder}/newsletter-draft-{timestamp}.html"
+      newsletter_metadata: "{output_folder}/newsletter-metadata-{timestamp}.yaml"
+
+    # SEO-Artikel-Generierung
+    seo_article_generation:
+      agent: "forge-content-engineer"
+      task: "seo-article-writer"
+      template: "seo-article-template.md"
+      keyword_integration: "topic_map_keywords"
+      internal_linking: "automatic_pillar_cluster"
+      schema_generation: "auto_json_ld"
+
+      output:
+        seo_article_draft: "{output_folder}/seo-article-draft-{timestamp}.md"
+        seo_metadata: "{output_folder}/seo-metadata-{timestamp}.yaml"
+        internal_links_report: "{output_folder}/internal-links-{timestamp}.yaml"
+
+    # Social Media Content-Generierung
+    social_media_generation:
+      agent: "amplify-content-repurposing-artist"
+      trigger: "on_content_ready"
+
+      platforms:
+        linkedin:
+          enabled: true
+          formats: ["mini_post", "carousel"]
+          template: "linkedin-post-template.md"
+
+        instagram:
+          enabled: true
+          formats: ["reel_script", "carousel", "quote"]
+          template: "instagram-reel-script.md"
+
+        x_twitter:
+          enabled: true
+          formats: ["thread"]
+          template: "x-thread-template.md"
+
+        facebook:
+          enabled: true
+          formats: ["community_post"]
+          template: "facebook-community-post.md"
+
+      output:
+        social_assets: "{output_folder}/social-assets-{timestamp}.zip"
+        social_schedule: "{output_folder}/social-schedule-{timestamp}.yaml"
+
+  # STEP 5: Quality-Validation (automatisch)
+  quality_validation:
+    enabled: true
+    depends_on: "content_generation_complete"
+
+    # Multi-Level Quality Checks
+    validation_agents:
+      authenticity_validator:
+        agent: "validator-ai-human-specialist"
+        task: "authenticity-scanner"
+        threshold: 71
+
+      seo_validator:
+        agent: "validator-ai-human-specialist"
+        checks: ["onpage_seo", "content_structure", "keyword_density"]
+
+      voice_validator:
+        agent: "validator-ai-human-specialist"
+        voice_profile: "adrian_161_line_guide"
+
+    # Automatische Bewertungs-Logik
+    auto_scoring:
+      enabled: true
+      score_thresholds:
+        publishing_ready: 71
+        review_required: 56-70
+        revision_needed: 0-55
+
+      # Auto-Revision-Loop
+      revision_workflow:
+        max_iterations: 2
+        auto_feedback_to_generator: true
+        human_approval_required: true
+
+    output:
+      validation_report: "{output_folder}/validation-report-{timestamp}.md"
+      quality_scores: "{output_folder}/quality-scores-{timestamp}.yaml"
+      revision_recommendations: "{output_folder}/revision-recommendations-{timestamp}.md"
+
+  # STEP 6: Publishing-Vorbereitung (automatisch)
+  publishing_preparation:
+    enabled: true
+    depends_on: "validation_passed"
+
+    # Publishing-Agent-Koordination
+    publishing_agents:
+      webflow_publisher:
+        agent: "pipeline-content-distribution-manager"
+        task: "webflow-publisher"
+        auto_optimization: true
+        schema_integration: true
+
+      newsletter_sender:
+        agent: "pipeline-content-distribution-manager"
+        task: "brevo-sender"
+        segmentation: "auto_based_on_topic"
+        tracking_enabled: true
+
+      social_scheduler:
+        agent: "pipeline-content-distribution-manager"
+        task: "social-scheduler"
+        platform_integration: true
+        optimal_timing: true
+
+    # Quality-Gates vor Publishing
+    publishing_gates:
+      - validation_score_check
+      - link_verification
+      - content_format_validation
+      - cta_functionality_test
+
+    output:
+      publishing_queue: "{output_folder}/publishing-queue-{timestamp}.yaml"
+      publishing_schedule: "{output_folder}/publishing-schedule-{timestamp}.yaml"
+
+  # STEP 7: Publishing-Durchführung (automatisch oder semi-auto)
+  publishing_execution:
+    enabled: true
+    depends_on: "publishing_preparation_complete"
+
+    # Publishing-Modi
+    publishing_modes:
+      fully_automated:
+        enabled: false # Zukünftige Option nach Testing
+        approval_required: false
+
+      semi_automated:
+        enabled: true
+        approval_points:
+          - content_approval
+          - scheduling_approval
+          - platform_specific_approval
+
+      manual_approval:
+        enabled: true
+        final_review_only: true
+
+    # Multi-Platform Publishing
+    multi_platform_publishing:
+      webflow:
+        agent: "pipeline-content-distribution-manager"
+        auto_index_request: true
+        category_assignment: "cvt_content"
+
+      brevo:
+        agent: "pipeline-content-distribution-manager"
+        campaign_tracking: true
+        segment_based_sending: true
+
+      social_media:
+        agent: "amplify-content-repurposing-artist"
+        auto_scheduling: true
+        platform_optimization: true
+
+    output:
+      publishing_log: "{output_folder}/publishing-log-{timestamp}.md"
+      success_metrics: "{output_folder}/publishing-metrics-{timestamp}.yaml"
+      failed_publishing: "{output_folder}/publishing-errors-{timestamp}.yaml"
+
+  # STEP 8: Analytics-Tracking (automatisch)
+  analytics_tracking:
+    enabled: true
+    depends_on: "publishing_complete"
+
+    # Performance-Monitoring
+    performance_monitoring:
+      agent: "insight-performance-metrics-analyst"
+      tracking_kpis:
+        - traffic_metrics
+        - engagement_metrics
+        - conversion_metrics
+        - content_roi
+
+    # Automatisierte Berichterstattung
+    automated_reporting:
+      daily_digests: false
+      weekly_reports: true
+      monthly_analytics: true
+
+    # Optimierung-Empfehlungen
+    optimization_recommendations:
+      topic_performance_analysis: true
+      content_gap_identification: true
+      seasonal_trend_detection: true
+
+    output:
+      analytics_report: "{output_folder}/analytics-report-{timestamp}.md"
+      performance_dashboard: "{output_folder}/performance-dashboard-{timestamp}.yaml"
+      optimization_suggestions: "{output_folder}/optimization-suggestions-{timestamp}.md"
+
+# Trigger-Konfiguration (Startpunkte)
+workflow_triggers:
+  # Manuelle Trigger
+  manual_triggers:
+    - trigger: "start_master_workflow"
+      description: "Starte kompletten Content-Creation-Workflow"
+      input_required: "topic_choice_or_auto"
+
+    - trigger: "quick_content"
+      description: "Schneller Content für Trend-Topic"
+      auto_topic_selection: true
+      content_type: "trending_article"
+
+    - trigger: "repurpose_existing"
+      description: "Bestehenden Content neu aufbereiten"
+      input_required: "content_selection"
+
+  # Automatische Trigger
+  automated_triggers:
+    - trigger: "weekly_content"
+      schedule: "every_monday_09:00"
+      auto_topic_selection: true
+      content_type: "newsletter_plus_social"
+
+    - trigger: "monthly_pillar"
+      schedule: "first_monday_of_month"
+      content_type: "pillar_page"
+      depth_level: "comprehensive"
+
+# Workflow-Konfiguration (Technik)
+workflow_configuration:
+  # Parallelisierung
+  parallel_execution:
+    enabled: true
+    max_parallel_tasks: 4
+    resource_optimization: true
+
+  # Fehlerbehandlung
+  error_handling:
+    retry_logic: "exponential_backoff"
+    max_retries: 3
+    fallback_modes: true
+    notification_on_failure: true
+
+  # Performance-Optimierung
+  performance_optimization:
+    caching_enabled: true
+    template_reuse: true
+    batch_processing: true
+    memory_optimization: true
+
+  # Quality-Assurance
+  quality_assurance:
+    content_quality_threshold: 71
+    voice_consistency_check: true
+    seo_validation: true
+    plagiats_check: true
+
+# Integrationen mit externen Systemen
+external_integrations:
+  # n8n-Integration
+  n8n_integration:
+    enabled: true
+    webhook_triggers:
+      - "content_published_to_webflow"
+      - "newsletter_sent"
+      - "social_media_posted"
+    automated_workflows:
+      - "customer_journey_update"
+      - "content_performance_analysis"
+      - "lead_scoring"
+
+  # ThriveCart-Integration
+  thrivecart_integration:
+    enabled: true
+    tracking_apis:
+      - "product_sales"
+      - "conversion_events"
+      - "customer_lifecycle"
+    automated_cta_integration: true
+
+  # Brevo-Integration
+  brevo_integration:
+    enabled: true
+    apis:
+      - "campaign_management"
+      - "contact_segmentation"
+      - "automated_email_sequences"
+      - "analytics_tracking"
+
+  # Google Search Console
+  gsc_integration:
+    enabled: true
+    tracking_metrics:
+      - "keyword_rankings"
+      - "click_through_rates"
+      - "content_performance"
+      - "indexing_status"
+    auto_optimization_suggestions: true
+
+# Status-Tracking und Monitoring
+status_tracking:
+  # Workflow-Status
+  workflow_status:
+    real_time_updates: true
+    dashboard_integration: true
+    notification_systems:
+      - telegram_bot
+      - email_alerts
+      - claude_code_status
+
+  # Content-KPIs
+  content_kpis:
+    production_metrics:
+      - articles_per_week
+      - newsletter_frequency
+      - social_posts_per_article
+      - time_to_publish
+
+    quality_metrics:
+      - authenticity_score_average
+      - validation_success_rate
+      - revision_needed_rate
+      - user_satisfaction_score
+
+    performance_metrics:
+      - traffic_growth
+      - engagement_rates
+      - conversion_rates
+      - content_roi
+
+# Benachrichtigungssystem
+notifications:
+  # Fortschritts-Updates
+  progress_notifications:
+    workflow_started: true
+    step_completion: true
+    validation_results: true
+    publishing_confirmation: true
+
+  # Erfolgs-Metriken
+  success_notifications:
+    content_published: true
+    kpi_achievements: true
+    revenue_impact: true
+
+  # Fehlermeldungen
+  error_notifications:
+    validation_failures: true
+    publishing_errors: true
+    integration_issues: true
+
+# Spezielle Features (Adrian-spezifisch)
+special_features:
+  # Interview-Enhancement
+  interview_enhancement:
+    voice_simulation: true # Adrian's Voice in Interview-Fragen
+    context_memory: true # Erkenntnisse aus vorherigen Interviews
+    expertise_leverage: true # Nutzt Adrian's CVT-Expertise
+
+  # Content-Enhancement
+  content_enhancement:
+    cvt_specific_examples: true # CVT-Beispiele aus Adrian's Erfahrung
+    choir_context: true # Real Chor-Situationen
+    case_studies: true # Erfolgs-Stories von Chören
+
+  # Quality-Enhancement
+  quality_enhancement:
+    adrian_voice_learning: true # Lernt Adrian's Voice besser kennen
+    authenticity_boost: true # Maximiert Authentizitäts-Score
+    seo_optimization: true # CVT-spezifische SEO
+
+# Benutzer-Interface und Interaktion
+user_interface:
+  # Dashboard
+  dashboard:
+    workflow_visualization: true
+    content_calendar: true
+    performance_charts: true
+    kpi_tracking: true
+
+  # Eingabe-Optionen
+  input_options:
+    voice_commands: true
+    gui_buttons: true
+    menu_selections: true
+    quick_actions: true
+
+# Ausgabe-Konfiguration
+output_configuration:
+  # Dateiorganisation
+  file_organization:
+    date_based_folders: true
+    content_type_separation: true
+    version_control: true
+    backup_creation: true
+
+  # Benennung
+  naming_convention:
+    articles: "cvt-{topic-slug}-{date}"
+    newsletters: "newsletter-{date}"
+    social_posts: "social-{topic}-{platform}-{date}"
+    reports: "analytics-{report-type}-{date}"
+
+# Version und Updates
+version_management:
+  current_version: "1.0.0-alpha"
+  auto_update_check: true
+  rollback_capability: true
+  feature_announcements: true
+# ---
+# **MASTER WORKFLOW STATUS:**
+# ✅ Vollständige Automatisierungs-Pipeline definiert
+# ✅ Alle 7 Agenten integriert
+# ✅ Multi-Platform Publishing automatisiert
+# ✅ Quality-Gates implementiert
+# ✅ Performance-Tracking aktiviert
+# ✅ Adrian-spezifische Enhancements
+
+# **NEXT STEPS:**
+# 1. Instructions-Datei erstellen
+# 2. Checklist für Qualitätssicherung
+# 3. Testing mit echtem Content
+# 4. Integration mit n8n-Workflows
+
+# **STATUS: READY FOR FULL AUTOMATION IMPLEMENTATION**

@@ -1,0 +1,425 @@
+# Business Context Data for ContentFlow Agents
+# Zentrale Datenquelle für alle Agenten - Adrian's Business-Modell, Kunden, Erfolgs-Stories
+
+version: "1.0.0-alpha"
+created_by: "Adrian Goldner"
+last_updated: "2025-10-22"
+data_source: "trusted-business-knowledge"
+
+# ============================================================================
+# 1. BUSINESS MODELL & FÜHRUNG
+# ============================================================================
+business_model:
+  company:
+    name: "ChoirAccelerator"
+    founder: "Adrian Goldner"
+    mission: "Chorleiter:innen mit modernen Stimmtechniken (CVT) zu befähigen"
+    vision: "Deutschlands führende Anlaufstelle für CVT-basierte chorische Stimmbildung"
+    tagline: "Erfolg im Chor durch moderne Stimmentwicklung"
+
+  products:
+    vocal_essentials:
+      name: "VocalEssentials"
+      type: "online_kurs"
+      price: "247€"
+      description: "Grundkurs für CVT-Techniken und chorische Anwendung"
+      target_audience: "Einsteiger in CVT"
+      conversion_rate: 0.03
+      funnel_stage: "consideration_to_decision"
+
+    pro_group:
+      name: "ProGroup"
+      type: "coaching_program"
+      price: "997€"
+      description: "12-wöchiges Coaching-Programm für Chorleiter:innen"
+      target_audience: "Ambitionierte Chorleiter:innen"
+      conversion_rate: 0.015
+      funnel_stage: "decision_to_purchase"
+
+    private_coaching:
+      name: "1:1 Coaching"
+      type: "personal_coaching"
+      price: "1.800€"
+      description: "Intensiv-Coaching für Fortgeschrittene"
+      target_audience: "Profi-Chorleiter:innen"
+      conversion_rate: 0.008
+      funnel_stage: "purchase_to_retention"
+
+  revenue_streams:
+    primary: "Course Sales (VocalEssentials + ProGroup)"
+    secondary: "1:1 Coaching"
+    future: "Advanced CVT Workshops, Mastermind"
+
+# ============================================================================
+# 2. ZIELGRUPPEN-PROFILE
+# ============================================================================
+target_audiences:
+  primary:
+    name: "chorleiter_innen"
+    demographics:
+      age_range: "35-65 Jahre"
+      gender_distribution: "60% weiblich, 40% männlich"
+      experience_level: "Mixed - Einsteiger bis Fortgeschritten"
+      choir_types: ["Kirchenchöre", "Projektchöre", "Kammerchöre", "Jugendchöre", "Schulchöre"]
+      size_focus: "10-100 Mitglieder"
+      time_constraints: "Wenig Zeit, effiziente Lösungen gesucht"
+      professional_challenges: ["Motivation", "Zeitmanagement", "Stimmprobleme", "CVT-Anwendung"]
+      goals: ["Qualitätsverbesserung", "Mitgliederbindung", "Auftrittsverbesserung", "Effizienzsteigerung"]
+      pain_points: ["Stimmversagt bei hohen Tönen", "Motivationsprobleme", "Probenmethodik veraltet", "Zeitmangel bei Probenvorbereitung"]
+      success_metrics: ["Stimmklangqualität", "Sängermotivation", "Chorkohäsion", "Konzerterfolg"]
+
+  secondary:
+    name: "ambitionierte_saenger_innen"
+    demographics:
+      age_range: "25-55 Jahre"
+      gender_distribution: "55% weiblich, 45% männlich"
+      experience_level: "Fortgeschrittene Solisten"
+      singing_contexts: ["Chor", "Solo", "Ensemble"]
+      challenges: ["Technik-Plateaus", "Stimmhygiene", "Vibrato-Kontrolle"]
+      goals: ["Sicherheit", "Ausdruck", "Klangfarbe", "Registerflexibilität"]
+      pain_points: ["Stimmbruch bei Belastung", "Intonationsprobleme", "Dynamik-Kontrolle", "Stimmhygiene-Misserfolge"]
+
+# ============================================================================
+# 3. ERFOLGS-STORIES & FALLSTUDIEN
+# ============================================================================
+success_stories:
+  choir_successes:
+    kammerchor_cantus_novum:
+      situation: "Stimmklang war uneinheitlich und verwaschen"
+      solution: "CVT-Anwendung für homogenen Klang"
+      timeline: "8 Wochen bis sichtbare Verbesserung"
+      results: "Homogener, klarer Chorklang mit 30% mehr Sängermotivation"
+      quantifiable: "Mehrstimmigkeit um 2.8 Skalenpunkte verbessert"
+      testimonial: "Endlich singen wir als einheitlicher Chor - die CVT-Methode ist bahnbrechend!"
+
+    projektchor_stimmgewalt:
+      situation: "Motivationstiefs und hohe Fluktuationsrate"
+      solution: "CVT-Motivationstechniken und moderne Probenmethodik"
+      timeline: "6 Wochen zur Stabilisierung"
+      results: "Fluktuationsrate reduziert von 40% auf 15%, Teilnahmequote +25%"
+      quantifiable: "Regelmäßigkeit verbessert, Sängermotivation +45%"
+      testimonial: "Ich kann endlich wieder auf die Proben freuen, ohne dass mich die Teilnahme quält!"
+
+  individual_transformations:
+    susanne_chorleiterin_34:
+      challenge: "Zwei Stunden Probenvorbereitung, stimmliche Unsicherheit"
+      solution: "CVT-basierte Aufwärmroutine mit 15 Minuten Effizienzgewinn"
+      results: "Probenvorbereitungszeit halbiert, Stimmicherheit +60%"
+      quote: "Ich führe meine Proben jetzt mit viel mehr Freude und weniger Stress durch"
+
+    michael_tenor_42:
+      challenge: "Stimmversatz bei A' und Dynamikproblemen"
+      solution: "CVT Registerübergänge und Stütztechniken"
+      results: "Sicherer A'-Anschlag, Dynamik-Kontrolle um 80% verbessert"
+      quote: "Meine hohe Tenorstimme ist endlich wieder da - dank Adrian's CVT-Anleitung!"
+
+  coaching_group_results:
+    pro_group_cohort_1:
+      participants: 12
+      average_improvement: "2.4 Skalenpunkte nach 12 Wochen"
+      success_rate: "92%"
+      key_achievements: ["Registerkontrolle", "Stimmhygiene", "Motivationstechniken"]
+      feedback: "Die beste Investition in meine chorische Entwicklung seit Jahren!"
+
+# ============================================================================
+# 4. WETTBEWERBS-STATISTIKEN & KPI
+# ============================================================================
+performance_data:
+  business_kpis:
+    website_visitors_montal: 500
+    newsletter_subscribers: 300
+    trial_signups_weekly: 3-5
+    pro_group_conversions_monthly: 2-4
+    private_coaching_clients_quarterly: 2-3
+    customer_lifetime_value: 2000
+    churn_rate: 0.08
+    average_order_value: 850
+    monthly_recurring_revenue: 2500
+    profit_margin: 0.85
+
+  content_kpis:
+    article_production_weekly: 1-2
+    newsletter_open_rate: 0.25
+    social_engagement_rate: 0.04
+    seo_ranking_improvement: "+15 positions monthly"
+    content_roi_multiplier: 4.2
+    authenticity_score_target: 75
+
+  market_metrics:
+    target_market_size_choirs: 54000
+    market_share_current: 0.001
+    market_share_goal_12_months: 0.01
+    competitor_count: 8
+    unique_value_proposition: "Interview-basiertes CVT + Chorleader-Fokus"
+    market_trends: ["Video-Content", "Online-Coaching", "Micro-Learning"]
+
+# ============================================================================
+# 5. KUNDENFEEDBACK & LERNPUNKTE
+# ============================================================================
+customer_insights:
+  common_praise_points:
+    - "Authentische, persönliche Art von Adrian"
+    - "Praktisch umsetzbare CVT-Anleitungen"
+    - "Effektive Probenmethodik für Zeitmangel"
+    - "Verständliche Erklärungen ohne Fachchinesisch"
+    - "Reale Fallbeispiele aus Chorpraxis"
+    - "Gute Balance zwischen Technik und Emotion"
+
+  common_improvement_suggestions:
+    - "Mehr Video-Beispiele für technische Übungen"
+    - "Downloadbare Notenbeispiele und Übungsblätter"
+    - "Fortgeschrittene Module für erfahrene Chorleiter"
+    - "Zusätzliche Motivationstechniken für schwierige Chorgruppen"
+    - "Mehr Integration von Noten-Software und Chor-Apps"
+
+  feedback_patterns:
+    - positive_feedback_ratio: 0.85
+    - net_promoter_score: 72
+    - repeat_purchase_rate: 0.23
+    - referral_rate: 0.12
+    - customer_support_satisfaction: 4.6
+
+# ============================================================================
+# 6. SIEGE-MARKETING & POSITIONIERUNG
+# ============================================================================
+competitive_positioning:
+  unique_selling_points:
+    - "CVT + Chorleiter-Fokus (niemand macht diese Kombination)"
+    - "Interview-basierte Content-Erstellung (100% authentisch)"
+    - "Authenticity-Scoring-Technologie (Branchen-Führer)"
+    - "Vollautomatisierte Content-Pipeline"
+    - "Integration von Business-Tools (ThriveCart, Brevo, n8n)"
+
+  competitor_analysis:
+    main_competitors:
+      - name: "Stimmbildung Online"
+        strengths: ["Große Content-Bibliothek", "Gute SEO", "Bekannte Marke"]
+        weaknesses: ["Generische AI-Content", "Kein Chor-Fokus", "Fehlende CVT-Spezialisierung"]
+
+      - name: "Chorleiter-Blog"
+        strengths: ["Erfahrener Chorleiter", "Gute Praxis-Beispiele"]
+        weaknesses: ["Veraltete Methodik", "Kein Systematisierung", "Fehlende CVT-Integration"]
+
+      - name: "Klassische Gesangsschule"
+        strengths: ["Starker lokaler Ruf", "Persönliche Betreuung"]
+        weaknesses: ["Traditionelle Methoden", "Keine moderne CVT", "Hoher Preis", "Inflexible Termine"]
+
+  market_positioning:
+    statement: "Deutschlands führende Anlaufstelle für CVT-basierte chorische Stimmbildung, spezialisiert auf Zeitmangel-geplagte Chorleiter:innen"
+    key_message: "Modernste CVT-Techniken + bewährte Probenmethodik = erfolgreicher Chor trotz Zeitmangel"
+
+# ============================================================================
+# 7. CONTENT-STRATEGIE & MESSENZIELE
+# ============================================================================
+content_strategy:
+  content_pillars:
+    cvt_basics:
+      focus: "CVT-Grundlagen für Chorleiter:innen"
+      formats: ["Newsletter", "SEO-Artikel", "Social Posts"]
+      frequency: "Weekly"
+      cta_type: "Newsletter-Optin → VocalEssentials Trial"
+
+    choir_leadership:
+      focus: "Probenmethodik, Motivation, Zeitmanagement"
+      formats: ["Fallstudien", "Praxis-Tipps", "Vorlagen"]
+      frequency: "Bi-weekly"
+      cta_type: "ProGroup Coaching"
+
+    vocal_health:
+      focus: "Stimmhygiene, Prävention, Regeneration"
+      formats: ["Guides", "Troubleshooting", "Expert-Interviews"]
+      frequency: "Monthly"
+      cta_type: "1:1 Coaching bei Bedarf"
+
+  distribution_channels:
+    primary: "Newsletter (Brevo)"
+    secondary: "Website (Webflow)"
+    tertiary: "Social Media (LinkedIn, Instagram, X, Facebook)"
+    quaternary: "YouTube, Podcast"
+
+  content_calibration:
+    voice_alignment: "100% Adrian's 161-seitiger Tone-of-Voice Guide"
+    authenticity_threshold: "71/100 Punkte"
+    quality_gates: ["SEO-Check", "Authenticity-Scan", "Expertise-Validation"]
+    funnel_stage_mapping: "Content → CTA → Landingpage → Funnel-Stage"
+
+# ============================================================================
+# 8. TECHNISCHE INFRASTRUKTUR
+# ============================================================================
+technical_infrastructure:
+  tools_stack:
+    cms: "Webflow"
+    email_marketing: "Brevo"
+    payment_processing: "ThriveCart"
+    course_platform: "Circle.so"
+    analytics: "Plausible.io"
+    automation: "n8n"
+    content_creation: "ContentFlow (CVT-basiert)"
+
+  api_connections:
+    webflow_api: true
+    brevo_api: true
+    thrivecart_api: true
+    google_search_console: true
+    plausible_api: true
+    n8n_webhooks: true
+
+  data_protection:
+    gdpr_compliant: true
+    data_storage: "EU-Server"
+    consent_management: "Double-Opt-in für Newsletter"
+    cookie_policy: "Privacy-first"
+
+# ============================================================================
+# 9. ENTWICKLUNGS-ROADMAP & ZIELE
+# ============================================================================
+development_roadmap:
+  quarter_1_q1_2025:
+    focus: "Master Workflow Implementation"
+    goals: ["Interview-basierte Content-Pipeline voll funktionsfähig", "Authenticity-Scoring implementiert"]
+    kpis: ["8 Artikel/Monat", "Authenticity Score ≥75", "Publishing-Automatisierung"]
+
+  quarter_2_q2_2025:
+    focus: "Business Integration & Analytics"
+    goals: ["ThriveCart Sales-Tracking", "Brevo Performance-Analyse", "Customer Journey Mapping"]
+    kpis: ["5% Newsletter-CR", "15% Trial-Conversion", "Analytics-Reports automatisiert"]
+
+  quarter_3_q3_2025:
+    focus: "Scale & Automation"
+    goals: ["Multi-Channel Content-Distribution", "MCP-Server für Tool-Integration", "Advanced Analytics Dashboard"]
+    kpis: ["200 Social Assets/Monat", "50% Zeitersparnis", "Performance-Predictions"]
+
+  quarter_4_q4_2025:
+    focus: "Market Expansion & Premium Features"
+    goals: ["Advanced CVT Workshops", "1:1 Coaching Skalierung", "Community Platform Integration"]
+    kpis: ["3 Premium Workshops/Monat", "10 Coaching Clients", "5.000€ MRR aus Premium"]
+
+# ============================================================================
+# 10. RISIKO-MANAGEMENT
+# ============================================================================
+risk_management:
+  business_risks:
+    market_risks: ["Marktanteil Konkurrenz", "Veränderte Gesangsschullandschaft", "Technologie-Disruption"]
+    operational_risks: ["Coaching-Auslastung", "Content-Qualitätsschwankung", "Technologie-Ausfälle"]
+    financial_risks: ["Kundenabwanderung", "Preis-Druck", "Zahlungsausfälle"]
+
+  mitigation_strategies:
+    quality_assurance: "Authenticity-Scoring + Adrian's Voice-Validation"
+    scalability_preparation: "Multi-Channel Automation + Premium-Coaching-Skalierung"
+    market_differentiation: "CVT + Chorleiter-Fokus + Interview-basierte Authentizität"
+    financial_planning: "Diversifizierte Produkt-Palette + Recurring Revenue"
+
+# ============================================================================
+# 11. MESSWERTE UND METRIKEN
+# ============================================================================
+metrics_kpis:
+  success_metrics:
+    business_metrics:
+      - mrr_growth_target: "+15% monthly"
+      - customer_acquisition_cost: "<50€"
+      - customer_lifetime_value: ">2.000€"
+      - churn_rate: "<5%"
+
+    content_metrics:
+      - authenticity_score_average: ">75/100"
+      - newsletter_open_rate: ">25%"
+      - engagement_rate: ">4%"
+      - production_efficiency: "2+ Artikel pro 8 Stunden"
+
+    market_metrics:
+      - seo_keyword_ranking: "Top 10 für 15+ CVT-Keywords"
+      - market_share_growth: "+2% quarterly"
+      - brand_authority_increase: "+10% monthly"
+
+  tracking_tools:
+    google_analytics: true
+    plausible_analytics: true
+    brevo_analytics: true
+    thrivecart_analytics: true
+    social_media_analytics: true
+    heatmap_tracking: true
+    conversion_funnel_analytics: true
+
+# ============================================================================
+# 12. CONTINUES IMPROVEMENT
+# ============================================================================
+continuous_improvement:
+  learning_loops:
+    customer_feedback_loop: "Systematische Analyse aller Kunden-Rückmeldungen"
+    performance_data_loop: "Monatliche Analyse aller Content- und Verkaufs-KPIs"
+    market_trend_loop: "Wöchentliche Markt-Trend-Analyse für Content-Planung"
+    competitive_intelligence_loop: "Monatliche Wettbewerber-Beobachtung"
+
+  optimization_priorities:
+    immediate: ["Content-Qualität durch Authenticity-Scoring", "CTA-Optimierung", "SEO-Performance"]
+    short_term: ["Newsletter-Automation", "Social Media Skalierung", "Analytics-Dashboard"]
+    medium_term: ["Premium-Produkte entwickeln", "Coaching-Kapazität erweitern", "MCP-Server Suite"]
+    long_term: ["Marktanteil ausbauen", "Internationalisierung", "AI-Content-Optimierung"]
+
+# ============================================================================
+# USAGE INSTRUCTIONS FOR AGENTS
+# ============================================================================
+agent_usage_guidelines:
+  access_permissions:
+    read_access: ["Alle Business-Daten", "Kunden-Daten", "Performance-KPIs"]
+    write_access: ["Content-Logs", "Analytics-Reports", "Performance-Updates"]
+    integration_access: ["ThriveCart API", "Brevo API", "Google Search Console"]
+
+  context_loading:
+    always_load: ["business_model", "target_audiences", "success_stories", "performance_data"]
+    situationally_load: ["recent_customer_feedback", "current_campaign_data", "seasonal_trends"]
+
+  data_privacy:
+    anonymize_personal_data: true
+    respect_consent_preferences: true
+    gdpr_compliance: true
+    no_data_sharing_with_third_parties: true
+
+  content_personalization_rules:
+    always_include: ["Adrian's CVT-Expertise", "Real choir practice examples"]
+    adapt_for: ["Funnel-Stage", "Previous Content Consumption", "Customer Journey Stage"]
+    reference_success_cases: ["Use cases from success_stories section"]
+    maintain_voice_consistency: "Follow 161-line tone-of-voice guide strictly"
+
+# ============================================================================
+# DATA MAINTENANCE
+# ============================================================================
+data_maintenance:
+  update_frequency:
+    business_model: "Quarterly or after major changes"
+    success_stories: "Monthly or after significant customer wins"
+    performance_kpis: "Monthly"
+    competitor_analysis: "Quarterly"
+    customer_insights: "Weekly"
+
+  version_control:
+    current_version: "1.0.0-alpha"
+    change_tracking: "Document all major changes with impact analysis"
+    backup_strategy: "Daily automated + weekly manual verification"
+    access_logging: "Track all agent access and data usage"
+
+# ============================================================================
+# INTEGRATION POINTS FOR TECHNICAL IMPLEMENTATION
+# ============================================================================
+integration_requirements:
+  api_keys_needed:
+    - "ThriveCart API für Customer Journey Tracking"
+    - "Brevo API für Newsletter-Segmentation basierend auf Customer Journey"
+    - "Google Search Console API für Keyword-Trend-Analyse"
+    - "Plausible API für Website-Performance mit Customer Journey Correlation"
+
+  webhook_endpoints:
+    - "ThriveCart Sales Events → ContentFlow Analytics"
+    - "Brevo Newsletter Events → Customer Journey Updater"
+    - "Website Conversion Events → Customer Journey State Machine"
+
+  data_sync_strategy:
+    real_time_sync: ["Sales", "Newsletter-Opens", "Website-Conversions"]
+    batch_sync: ["Customer Segments", "Performance Reports", "Content Performance"]
+    scheduled_exports: ["Monthly Analytics", "Quarterly Business Intelligence"]
+# ---
+# **IMPORTANT:** This file contains Adrian's core business intelligence for authentic, personalized content creation.
+# All agents must load this file and use the business context for relevant, targeted content that converts.
+
+# **Last Updated:** 2025-10-22 by Adrian Goldner
+# **Next Review:** 2025-11-01 or after major business changes

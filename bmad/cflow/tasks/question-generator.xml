@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="question-generator" name="Interview Question Generator" version="1.0.0-alpha" author="Adrian Goldner">
+  <description>
+    Generates 10-15 structured interview questions based on selected content angles and topic context.
+    Designed for Adrian's interview-based content creation workflow with focus on CVT choir director expertise.
+
+    This task creates questions that:
+    1. Elicit personal experiences and stories
+    2. Extract practical expertise and actionable advice
+    3. Reveal authentic opinions and insights
+    4. Connect to choir directors' real challenges
+    5. Generate content that builds authority and trust
+  </description>
+
+  <!-- Required input files -->
+  <inputs>
+    <input name="topic-angle" required="true" description="Selected content angle/topic for the interview"/>
+    <input name="target-audience" required="true" description="Target audience (choir directors, singers)"/>
+    <input name="content-type" required="true" description="Content type (newsletter, SEO article, pillar page)"/>
+    <input name="tone-of-voice" required="false" default="bmad/cflow/data/tone-of-voice-guide.md" description="Path to Adrian's tone of voice guide"/>
+    <input name="expertise-area" required="true" description="CVT expertise area or choir management topic"/>
+    <input name="previous-interviews" required="false" description="Previous interview protocols for context and avoiding repetition"/>
+  </inputs>
+
+  <!-- Context files for question generation -->
+  <context>
+    <file name="tone-of-voice" path="{tone-of-voice}" description="Adrian's communication style and voice patterns"/>
+    <file name="expertise-areas" path="bmad/cflow/data/expertise-areas.yaml" description="CVT and choir management expertise domains"/>
+    <file name="audience-profile" path="bmad/cflow/data/audience-profile.yaml" description="Choir director and singer profiles"/>
+    <file name="question-patterns" path="bmad/cflow/config/question-patterns.yaml" description="Proven question patterns for expert interviews"/>
+  </context>
+
+  <!-- Output configuration -->
+  <outputs>
+    <output name="interview-questions" path="{output-folder}/interview-questions-{timestamp}.md" format="markdown" description="Structured interview questions with follow-up prompts"/>
+    <output name="question-framework" path="{output-folder}/question-framework-{timestamp}.yaml" format="yaml" description="Question framework for interview flow"/>
+  </outputs>
+
+  <!-- Question generation logic -->
+  <instructions>
+    <step id="analyze-topic">
+      <action>analyze_input</action>
+      <input>{topic-angle}</input>
+      <parameters>
+        <param name="context-type">content-angle-analysis</param>
+        <param name="expertise-domain">CVT-choir-management</param>
+        <param name="audience-type">choir-director</param>
+      </parameters>
+    </step>
+
+    <step id="load-patterns">
+      <action>load_context</action>
+      <context>question-patterns</context>
+      <parameters>
+        <param name="pattern-type">expert-interview</param>
+        <param name="question-depth">deep-dive</param>
+      </parameters>
+    </step>
+
+    <step id="generate-question-categories">
+      <action>create_categories</action>
+      <categories>
+        <category name="background-experience" description="Personal experience and journey questions">
+          <pattern>How did you discover/learn about [topic]?</pattern>
+          <pattern>What was your first experience with [topic]?</pattern>
+          <pattern>Can you share a personal story about [topic]?</pattern>
+        </category>
+
+        <category name="expertise-insights" description="Professional expertise and technical knowledge">
+          <pattern>What's the most common misconception about [topic]?</pattern>
+          <pattern>If you had to explain [topic] to a beginner, what would you say?</pattern>
+          <pattern>What's the advanced technique that separates professionals from amateurs in [topic]?</pattern>
+        </category>
+
+        <category name="practical-applications" description="Actionable advice and implementation">
+          <pattern>What's the first step someone should take with [topic]?</pattern>
+          <pattern>Can you walk me through your process for [topic]?</pattern>
+          <pattern>What are the top 3 mistakes people make with [topic]?</pattern>
+        </category>
+
+        <category name="opinions-perspectives" description="Personal opinions and unique viewpoints">
+          <pattern>What's your controversial take on [topic]?</pattern>
+          <pattern>If you could change one thing about how people approach [topic], what would it be?</pattern>
+          <pattern>What excites you most about the future of [topic]?</pattern>
+        </category>
+
+        <category name="audience-connection" description="Questions relevant to choir directors">
+          <pattern>How does [topic] specifically apply to choir leadership?</pattern>
+          <pattern>What's the biggest challenge choir directors face with [topic]?</pattern>
+          <pattern>How can choir directors implement [topic] with limited time?</pattern>
+        </category>
+      </categories>
+    </step>
+
+    <step id="create-question-flow">
+      <action>design_flow</action>
+      <flow>
+        <phase name="warmup" questions="2" type="background-experience">
+          <goal>Build rapport and establish context</goal>
+          <style>conversational, personal</style>
+        </phase>
+
+        <phase name="core-content" questions="6-8" type="expertise-insights, practical-applications">
+          <goal>Elicit expertise and actionable advice</goal>
+          <style>structured, detailed</style>
+        </phase>
+
+        <phase name="deep-dive" questions="2-3" type="opinions-perspectives, audience-connection">
+          <goal>Extract unique insights and authentic opinions</goal>
+          <style>thought-provoking, specific</style>
+        </phase>
+
+        <phase name="wrapup" questions="1" type="practical-applications">
+          <goal>Provide clear next steps and summary</goal>
+          <style>actionable, encouraging</style>
+        </phase>
+      </flow>
+    </step>
+
+    <step id="generate-specific-questions">
+      <action>create_questions</action>
+      <template>
+        Based on the topic angle **{topic-angle}** for target audience **{target-audience}**, generate interview questions that:
+
+        1. **Experience-Based Questions** (2-3 questions)
+           - Focus on personal journey with CVT/choir management
+           - Ask about specific challenges and breakthroughs
+           - Request concrete examples and stories
+           - Example: "Can you walk me through your first 'aha' moment with CVT technique?"
+
+        2. **Expertise Questions** (3-4 questions)
+           - Extract technical knowledge and best practices
+           - Ask about common mistakes and solutions
+           - Request step-by-step processes
+           - Example: "What are the 3 most common voice technique mistakes choir directors make?"
+
+        3. **Opinion/Insight Questions** (2-3 questions)
+           - Elicit unique perspectives and controversial takes
+           - Ask about future trends and predictions
+           - Request preferences and recommendations
+           - Example: "What's your controversial take on traditional choir warm-up methods?"
+
+        4. **Audience-Specific Questions** (2-3 questions)
+           - Focus on choir directors' specific challenges
+           - Address time constraints and practical limitations
+           - Provide actionable implementation advice
+           - Example: "How can busy choir directors implement CVT principles in just 10 minutes per rehearsal?"
+
+        5. **Follow-up Prompts** (3-5 prompts)
+           - "Can you give me a specific example of that?"
+           - "What was the result of that approach?"
+           - "What would you do differently next time?"
+           - "How would you explain that to a beginner?"
+      </template>
+    </step>
+
+    <step id="apply-tone-of-voice">
+      <action>apply_voice</action>
+      <voice-profile>
+        <personality>authentic, helpful, practical</personality>
+        <language>conversational German</language>
+        <style>direct but empathetic</style>
+        <phrases>
+          <phrase>Was ich aus meiner Erfahrung gelernt habe...</phrase>
+          <phrase>Ein Fehler, den ich oft sehe...</phrase>
+          <phrase>Für dich als Chorleiter:in...</phrase>
+          <phrase>Lass mich dir zeigen, wie...</phrase>
+          <phrase>Was ich dir empfehlen würde...</phrase>
+        </phrases>
+      </voice-profile>
+    </step>
+
+    <step id="structure-questions">
+      <action>format_output</action>
+      <format>
+        <header>
+          # Interview Questions: {topic-angle}
+
+          **Target Audience:** {target-audience}
+          **Content Type:** {content-type}
+          **Expertise Area:** {expertise-area}
+          **Generated:** {current-datetime}
+
+          ## Interview Framework
+        </header>
+
+        <question-section>
+          ## Phase 1: Warmup & Rapport (2 Fragen)
+          *Ziel: Vertrauen aufbauen und Kontext schaffen*
+
+          [WARMUP_QUESTIONS]
+
+          ## Phase 2: Core Expertise (6-8 Fragen)
+          *Ziel: Fachwissen und praktische Ratschläge extrahieren*
+
+          [EXPERTISE_QUESTIONS]
+
+          ## Phase 3: Deep Dive & Insights (2-3 Fragen)
+          *Ziel: Einzigartige Perspektiven und Meinungen gewinnen*
+
+          [INSIGHT_QUESTIONS]
+
+          ## Phase 4: Practical Application (1 Frage)
+          *Ziel: Konkrete nächste Schritte und Zusammenfassung*
+
+          [PRACTICAL_QUESTION]
+        </question-section>
+
+        <followup-section>
+          ## Follow-up Prompts
+          *Für jede Frage automatisch nachfragen, wenn die Antwort zu kurz ist:*
+
+          [FOLLOWUP_PROMPTS]
+        </followup-section>
+
+        <interview-tips>
+          ## Interview Tips
+          - Jede Frage aktiv zuhören und 2-3 Sekunden warten
+          - Persönliche Geschichten und Beispiele nachfragen
+          - Konkrete Zahlen und Daten anfordern
+          - Meinungen und Vorlieben explizit erfragen
+          - "Warum"-Fragen stellen, um Denkprozesse zu verstehen
+          - Emotionale Reaktionen und Erfahrungen thematisieren
+        </interview-tips>
+      </format>
+    </step>
+
+    <step id="create-framework">
+      <action>generate_yaml</action>
+      <content>
+        interview_framework:
+          topic_angle: {topic-angle}
+          target_audience: {target-audience}
+          content_type: {content-type}
+          expertise_area: {expertise-area}
+          total_questions: {generated-question-count}
+          estimated_duration: "{estimated-minutes} minutes"
+          phases:
+            warmup:
+              questions: {warmup-count}
+              style: conversational
+              goal: rapport_building
+            core_expertise:
+              questions: {expertise-count}
+              style: structured
+              goal: knowledge_extraction
+            deep_dive:
+              questions: {insight-count}
+              style: thought_provoking
+              goal: unique_insights
+            wrapup:
+              questions: {practical-count}
+              style: actionable
+              goal: next_steps
+      </content>
+    </step>
+
+    <step id="validate-questions">
+      <action>validate</action>
+      <criteria>
+        <criterion>Each question elicits specific expertise, not generic knowledge</criterion>
+        <criterion>Questions are phrased conversationally, not academically</criterion>
+        <criterion>Follow-up prompts are specific and actionable</criterion>
+        <criterion>Total interview time is reasonable (30-60 minutes)</criterion>
+        <criterion>Questions align with Adrian's tone of voice</criterion>
+      </criteria>
+    </step>
+  </instructions>
+
+  <!-- Error handling -->
+  <error_handling>
+    <error type="missing-input">
+      <action>prompt_for_required</action>
+      <message>Topic angle and target audience are required to generate interview questions.</message>
+    </error>
+
+    <error type="insufficient-context">
+      <action>use_defaults</action>
+      <message>Using default question patterns for choir director interviews.</message>
+    </error>
+
+    <error type="generation-failed">
+      <action>retry_with_fallback</action>
+      <message>Falling back to standard expert interview question template.</message>
+    </error>
+  </error_handling>
+
+  <!-- Success criteria -->
+  <success_criteria>
+    <criterion>Generated 10-15 unique interview questions</criterion>
+    <criterion>Questions structured in logical interview flow</criterion>
+    <criterion>Follow-up prompts provided for deeper exploration</criterion>
+    <criterion>Questions personalized for CVT/choir director context</criterion>
+    <criterion>Interview framework and tips included</criterion>
+  </success_criteria>
+</task>

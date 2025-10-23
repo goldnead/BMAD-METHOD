@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="data-access-controller" name="Business & Customer Data Access Controller" version="1.0.0-alpha" author="Adrian Goldner">
+  <description>
+    Central data access controller for all ContentFlow agents. Provides secure, GDPR-compliant access to Adrian's business context, customer journey data, and performance metrics.
+    This task ensures all agents have access to:
+    1. Adrian's complete business model and expertise
+    2. Customer journey stages and history
+    3. Newsletter archive with performance data
+    4. Success stories and case studies for content inspiration
+    5. Market insights and competitive positioning
+    6. GDPR-compliant data handling with privacy controls
+  </description>
+
+  <!-- Required input files -->
+  <inputs>
+    <input name="agent-type" required="true" description="Which agent needs data access: connect/forge/validator/pipeline/amplify/insight"/>
+    <input name="data-purpose" required="true" description="Purpose of data access: content_creation/personalization/performance_analysis/customer_journey"/>
+    <input name="customer-segment" required="false" default="all" description="Customer segment to access: all/new_subscribers/active_subscribers/at_risk/past_customers"/>
+    <input name="time-period" required="false" default="30_days" description="Time period for data: 7_days/30_days/90_days/1_year/all"/>
+    <input name="content-filter" required="false" default="all" description="Content filter for newsletter archive: all/topic/date/segment/performance"/>
+  </inputs>
+
+  <!-- Core data sources -->
+  <datasources>
+    <source name="business-context" path="{project-root}/bmad/cflow/data/business-context.yaml" description="Adrian's business model, products, market positioning"/>
+    <source name="target-audience" path="{project-root}/bmad/cflow/data/business-context.yaml" description="Chorleiter and Sänger profiles, pain points, goals"/>
+    <source name="success-stories" path="{project-root}/bmad/cflow/data/business-context.yaml" description="Customer transformation stories and results"/>
+    <source name="customer-journey" path="{project-root}/bmad/cflow/data/customer-journey.yaml" description="Customer journey stages, behaviors, lifecycle"/>
+    <source name="newsletter-archive" path="{project-root}/bmad/cflow/data/newsletter-archive.yaml" description="All sent newsletters with performance data"/>
+    <source name="performance-metrics" path="{project-root}/bmad/cflow/data/performance-metrics.yaml" description="KPIs, conversion data, ROI metrics"/>
+    <source name="tone-of-voice" path="{project-root}/bmad/cflow/data/tone-of-voice-guide.md" description="Adrian's 161-line voice guide"/>
+    <source name="topic-map" path="{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml" description="CVT topic hierarchy and content strategy"/>
+  </datasources>
+
+  <!-- Output configuration -->
+  <outputs>
+    <output name="agent-context-data" path="{output-folder}/agent-context-{agent-type}-{timestamp}.json" format="json" description="Context data package for specific agent"/>
+    <output name="customer-journey-snapshot" path="{output-folder}/customer-journey-{timestamp}.json" format="json" description="Current customer journey state and segmentation"/>
+    <output name="content-insights" path="{output_folder}/content-insights-{timestamp}.json" format="json" description="Content performance insights and patterns"/>
+    <output name="personalization-data" path="{output-folder}/personalization-{timestamp}.json" format="json" description="Customer segment data for content personalization"/>
+    <output name="data-access-log" path="{output-folder}/data-access-{timestamp}.yaml" format="yaml" description="Audit log of all data access activities"/>
+  </outputs>
+
+  <!-- Data access control logic -->
+  <instructions>
+    <step id="validate-access-request">
+      <action>validate_request</action>
+      <parameters>
+        <param name="agent-permissions">Check if agent has permission for requested data type</param>
+        <param name="gdpr-compliance">Ensure data access meets privacy requirements</param>
+        <param name="purpose-alignment">Verify data purpose matches business goals</param>
+      </parameters>
+    </step>
+
+    <step id="load-appropriate-data">
+      <action>load_context_data</action>
+      <datasource-selection>
+        <!-- Agent-specific data loading -->
+        <case value="connect">
+          <datasources>business-context, target-audience, success-stories, tone-of-voice</datasources>
+          <purpose>Generate authentic interview questions and build rapport</purpose>
+        </case>
+
+        <case value="forge">
+          <datasources>business-context, target-audience, success-stories, tone-of-voice, topic-map</datasources>
+          <purpose>Create personalized content in Adrian's voice with business context</purpose>
+        </case>
+
+        <case value="validator">
+          <datasources>business-context, tone-of-voice, previous-validation-reports</datasources>
+          <purpose>Validate content authenticity and voice consistency</purpose>
+        </case>
+
+        <case value="pipeline">
+          <datasources>business-context, performance-metrics, customer-journey</datasources>
+          <purpose>Optimize publishing and track customer journey conversions</purpose>
+        </case>
+
+        <case value="amplify">
+          <datasources>business-context, target-audience, newsletter-archive, social-performance</datasources>
+          <purpose>Repurpose successful content for different platforms and audiences</purpose>
+        </case>
+
+        <case value="insight">
+          <datasources>business-context, performance-metrics, customer-journey, market-insights</datasources>
+          <purpose>Generate analytics reports and business intelligence</purpose>
+        </case>
+      </datasource-selection>
+    </step>
+
+    <step id="apply-data-filters">
+      <action>filter_and_transform</action>
+      <filtering>
+        <filter name="customer-segment" description="Apply customer segment filtering">
+          <segments>
+            <segment name="new_subscribers_30_days">Customers who subscribed in last 30 days</segment>
+            <segment name="active_engaged_90_days">High-engagement customers from last 90 days</segment>
+            <segment name="at_risk_churn_180_days">Inactive customers at risk of churn</segment>
+            <segment name="past_customers">Former customers with purchase history</segment>
+          </segments>
+        </filter>
+
+        <filter name="content-performance" description="Filter newsletter content by performance">
+          <criteria>
+            <criterion name="high_open_rate">Open rate >25%</criterion>
+            <criterion name="high_conversion_rate">Conversion rate >4%</criterion>
+            <criterion name="customer_favorite">Most shared or clicked content</criterion>
+            <criterion name="recent_trending">Content from trending topics</criterion>
+          </criteria>
+        </filter>
+
+        <filter name="time-period" description="Filter data by specified time range">
+          <ranges>
+            <range name="7_days">Last 7 days for immediate insights</range>
+            <range name="30_days">Last 30 days for monthly analysis</range>
+            <range name="90_days">Last 90 days for quarterly trends</range>
+            <range name="1_year">Last year for strategic planning</range>
+          </ranges>
+        </filter>
+      </filtering>
+    </step>
+
+    <step id="generate-context-package">
+      <action>create_context_package</action>
+      <package-structure>
+        <!-- Agent-specific context packages -->
+        <package name="connect-agent-context">
+          <elements>
+            <element name="expertise-areas">Adrian's CVT expertise and training background</element>
+            <element name="target-audience-profile">Chorleiter demographics and pain points</element>
+            <element name="success-stories">Relevant customer transformations and results</element>
+            <element name="voice-characteristics">Adrian's tone of voice patterns</element>
+            <element name="interview-techniques">Proven interview methods for CVT coaching</element>
+            <element name="common-objections">Typical objections and Adrian's responses</element>
+          </elements>
+        </package>
+
+        <package name="forge-agent-context">
+          <elements>
+            <element name="business-model">ChoirAccelerator products and pricing</element>
+            <element name="customer-journey-stage">Current audience awareness and decision stages</element>
+            <element name="content-performance">Best performing topics and formats</element>
+            <element name="cta-optimization">Funnel-stage appropriate calls-to-action</element>
+            <element name="product-benefits">Value propositions for each product</element>
+          </elements>
+        </package>
+
+        <package name="validator-agent-context">
+          <elements>
+            <element name="voice-baseline">Adrian's authentic voice markers and patterns</element>
+            <element name="authenticity-thresholds">Minimum scores and quality gates</element>
+            <element name="common-ai-patterns">AI patterns to detect and avoid</element>
+            <element name="quality-checklists">SEO and content quality requirements</element>
+            <element name="previous-scores">Historical authenticity scores for trend analysis</element>
+          </elements>
+        </package>
+
+        <package name="pipeline-agent-context">
+          <elements>
+            <element name="publishing-schedule">Optimal timing and frequency</element>
+            <element name="platform-configurations">Webflow, Brevo, GSC API settings</element>
+            <element name="conversion-tracking">ThriveCart integration and customer journey mapping</element>
+            <element name="performance-kpis">Success metrics and conversion benchmarks</element>
+          </elements>
+        </package>
+
+        <package name="amplify-agent-context">
+          <elements>
+            <element name="successful-content">High-performing articles and newsletters</element>
+            <element name="audience-preferences">Platform-specific engagement patterns</element>
+            <element name="repurposing-templates">Proven formats for different platforms</element>
+            <element name="scheduling-optimization">Best times and frequency per platform</element>
+          </elements>
+        </package>
+
+        <package name="insight-agent-context">
+          <elements>
+            <element name="business-kpis">Current performance against targets</element>
+            <element name="market-intelligence">Competitor analysis and market trends</element>
+            <element name="customer-behavior">Engagement patterns and conversion paths</element>
+            <element name="growth-opportunities">Data-driven growth recommendations</element>
+          </elements>
+        </package>
+      </package-structure>
+    </step>
+
+    <step id="apply-gdpr-protections">
+      <action>ensure_privacy_compliance</action>
+      <protections>
+        <protection name="data-anonymization">Personal customer data anonymized for content creation</protection>
+        <protection name="consent-management">Track customer consent and preferences</protection>
+        <protection name="data-minimization">Access only necessary data for specific purpose</protection>
+        <protection name="access-logging">Log all data access for audit trail</protection>
+        <protection name="retention-policy">Customer data retention and deletion policies</protection>
+      </protections>
+    </step>
+
+    <step id="create-output-package">
+      <action>generate_output</action>
+      <output-format>
+        <format name="agent-context-package" type="json">
+          <structure>
+            <field name="agent_type"/>
+            <field name="timestamp"/>
+            <field name="business_context"/>
+            <field name="audience_insights"/>
+            <field name="content_guidance"/>
+            <field name="performance_data"/>
+            <field name="gdpr_compliance"/>
+          </structure>
+        </format>
+
+        <format name="customer-journey-snapshot" type="json">
+          <structure>
+            <field name="snapshot_date"/>
+            <field name="total_subscribers"/>
+            <field name="active_segments"/>
+            <field name="at_risk_segments"/>
+            <field name="conversion_funnel_stages"/>
+            <field name="recent_performance"/>
+          </structure>
+        </format>
+
+        <format name="data-access-log" type="yaml">
+          <structure>
+            <field name="timestamp"/>
+            <field name="agent_type"/>
+            <field name="data_purpose"/>
+            <field name="data_sources_accessed"/>
+            <field name="customer_segments_accessed"/>
+            <field name="gdpr_compliance"/>
+            <field name="data_volume"/>
+          </structure>
+        </format>
+      </output-format>
+    </step>
+
+    <step id="update-data-access-log">
+      <action>log_access_activity</action>
+      <logging>
+        <log-entry>
+          <timestamp>current_timestamp</timestamp>
+          <agent_type>{agent-type}</agent_type>
+          <data_purpose>{data-purpose}</data_purpose>
+          <data_sources_accessed>{datasources-accessed}</data_sources_accessed>
+          <customer_segments>{customer-segment}</customer_segments>
+          <gdpr_compliant>true</gdpr_compliant>
+          <data_volume>{data-volume}</data_volume>
+          <user_context{agent-specific-context}</user_context>
+        </log-entry>
+      </logging>
+    </step>
+
+    <step id="validate-output-completeness">
+      <action>quality_assurance</action>
+      <quality-checks>
+        <check name="data_integrity">All requested data properly loaded and formatted</check>
+        <check name="gdpr_compliance">Data access follows privacy regulations</check>
+        <check name="context_relevance">Data matches agent's purpose and needs</check>
+        <check name="output_format">Generated files in correct format and location</check>
+        <check name="security_logging">All access properly logged for audit</check>
+      </quality-checks>
+    </step>
+
+    <step id="generate-usage-recommendations">
+      <action>provide_insights</action>
+      <recommendations>
+        <recommendation type="content_personalization">
+          <insight>Use customer journey stage to personalize CTAs</insight>
+          <action>Map newsletter content to current customer funnel positions</action>
+          <impact>Expected 20-30% increase in conversion rates</impact>
+        </recommendation>
+
+        <recommendation type="topic_optimization">
+          <insight>Leverage high-performing content patterns</insight>
+          <action>Focus on topics with >25% open rates and >4% conversion rates</action>
+          <impact>Improved content relevance and engagement</impact>
+        </recommendation>
+
+        <recommendation type="audience_segmentation">
+          <insight>Target inactive segments with reactivation campaigns</insight>
+          <action>Create special content for at-risk subscribers</action>
+          <impact>Expected 15% reduction in churn rate</impact>
+        </recommendation>
+      </recommendations>
+    </step>
+
+  </instructions>
+
+  <!-- Error handling -->
+  <error_handling>
+    <error type="insufficient_permissions">
+      <action>log_security_event</action>
+      <message>Agent {agent-type} attempted to access restricted data: {data-purpose}</message>
+      <action>notify_administrator</action>
+    </error>
+
+    <error type="data_source_unavailable">
+      <action>use_fallback_data</action>
+      <message>Data source {datasource} not available, using fallback</message>
+      <action>notify_data_team</action>
+    </error>
+
+    <error type="gdpr_compliance_violation">
+      <action>block_access</action>
+      <message>Data access violates GDPR compliance rules</message>
+      <action>log_violation</action>
+    </error>
+
+    <error type="data_corruption">
+      <action>validate_data_integrity</action>
+      <message>Detected data corruption in {datasource}, initiating validation</message>
+      <action>repair_or_replace</action>
+    </error>
+  </error_handling>
+
+  <!-- Success criteria -->
+  <success_criteria>
+    <criterion>All agents receive appropriate business context for their function</criterion>
+    <criterion>Customer data access follows GDPR compliance requirements</criterion>
+    <criterion>Performance insights enable data-driven content decisions</criterion>
+    <criterion>Newsletter archive enables effective content repurposing</criterion>
+    <criterion>Success stories provide authentic examples for content creation</criterion>
+    <criterion>Customer journey data supports dynamic personalization</criterion>
+    <criterion>All data access activities properly logged and auditable</criterion>
+  </success_criteria>
+</task>

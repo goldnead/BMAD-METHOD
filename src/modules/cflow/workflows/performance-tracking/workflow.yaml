@@ -1,0 +1,102 @@
+# Performance Tracking Workflow Configuration
+name: "performance-tracking"
+description: "Monatliche KPI-Analyse und Reporting über alle Plattformen (SEO, Newsletter, Social Media, Analytics) mit Business Impact Assessment"
+author: "Adrian Goldner"
+
+# Critical variables from config
+config_source: "{project-root}/bmad/cflow/config.yaml"
+output_folder: "{config_source}:output_folder"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Required Data Files
+content_performance_log: "{project-root}/bmad/cflow/data/published/content-performance.csv"
+social_performance_log: "{project-root}/bmad/cflow/data/analytics/social-performance.csv"
+newsletter_performance: "{project-root}/bmad/cflow/data/analytics/newsletter-performance.csv"
+previous_reports: "{project-root}/bmad/cflow/data/analytics/monthly-reports/"
+
+# Recommended inputs for context
+recommended_inputs:
+  - gsc_exports: "{project-root}/bmad/cflow/data/gsc-exports/"
+  - plausible_analytics: "{project-root}/bmad/cflow/data/analytics/plausible/"
+  - brevo_campaigns: "{project-root}/bmad/cflow/data/analytics/brevo/"
+  - social_media_analytics: "{project-root}/bmad/cflow/data/analytics/social/"
+  - business_metrics: "{project-root}/bmad/cflow/data/analytics/business/"
+
+# Module path and component files
+installed_path: "{project-root}/bmad/cflow/workflows/performance-tracking"
+template: "{installed_path}/template.md"
+instructions: "{installed_path}/instructions.md"
+validation: "{installed_path}/checklist.md"
+
+# Output configuration
+default_output_file: "{output_folder}/monthly-analytics-report-{date}.md"
+performance_dashboard: "{output_folder}/performance-dashboard-{date}.json"
+content_insights: "{output_folder}/content-insights-{date}.md"
+business_impact: "{output_folder}/business-impact-{date}.md"
+
+# Tool Requirements
+required_tools:
+  - "Google Search Console API":
+      description: "Für SEO-Performance-Daten und Keyword-Rankings"
+      setup_link: "https://developers.google.com/webmaster-tools/v1/how-tos/authorizing"
+  - "Plausible.io API":
+      description: "Für Website-Traffic und User-Behavior Analytics"
+      setup_link: "https://plausible.io/docs/stats-api"
+  - "Brevo API":
+      description: "Für Newsletter-Performance und Lead-Tracking"
+      setup_link: "https://developers.brevo.com/"
+  - "Social Media APIs":
+      description: "Für Social Media Performance (LinkedIn, Instagram, X, Facebook)"
+      setup_link: "Various Platform APIs"
+
+# Workflow-specific settings
+reporting_period: "monthly" # monthly | weekly | quarterly
+comparison_periods: ["previous_month", "previous_year_same_month"]
+executive_summary_only: false # true für Kurzfassung
+include_predictions: true # Zukunftsprognosen inkludieren
+auto_distribute: false # Automatischer Report-Versand
+
+# KPI Configuration
+primary_kpis:
+  seo_metrics:
+    - "organic_traffic"
+    - "keyword_rankings"
+    - "click_through_rate"
+    - "index_coverage"
+
+  content_metrics:
+    - "articles_published"
+    - "content_engagement"
+    - "authenticity_score"
+    - "social_shares"
+
+  business_metrics:
+    - "newsletter_subscribers"
+    - "lead_conversion_rate"
+    - "cost_per_acquisition"
+    - "content_roi"
+
+# Threshold Configuration
+performance_thresholds:
+  organic_traffic_growth: 15 # % Ziel-Wachstum
+  keyword_ranking_improvement: 5 # Positionen
+  newsletter_open_rate: 25 # %
+  social_engagement_rate: 3 # %
+  lead_conversion_rate: 2 # %
+
+# Notification Settings
+enable_alerts: true
+alert_channels: ["email"] # email | telegram | slack
+alert_thresholds:
+  traffic_decline: -10 # % Abfall Alarm
+  ranking_drop: -5 # Positionen Abfall Alarm
+  newsletter_bounce_rate: 5 # % Bounce Rate Alarm
+
+# Business Impact Calculation
+business_value_assumptions:
+  average_ltv: 1000 # € Lifetime Value
+  lead_to_customer_rate: 10 # %
+  content_production_cost: 500 # € pro Artikel
+  time_investment_hours: 8 # Stunden pro Artikel

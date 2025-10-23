@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="cflow-schema-generator" version="1.0">
+  <metadata>
+    <name>Schema Generator</name>
+    <description>Generates JSON-LD structured data for Article, FAQ, Product, and other schema types</description>
+    <author>Adrian Goldner</author>
+    <module>cflow</module>
+    <complexity>simple</complexity>
+  </metadata>
+
+  <inputs>
+    <input name="schema_type" type="string" required="true">
+      <description>Type of schema to generate</description>
+      <allowed-values>
+        - Article
+        - BlogPosting
+        - FAQPage
+        - Product
+        - Organization
+        - Person
+        - BreadcrumbList
+      </allowed-values>
+    </input>
+
+    <input name="article_data" type="object" required-if="schema_type=Article|BlogPosting">
+      <fields>
+        - headline: string (required)
+        - description: string (required)
+        - author_name: string (required)
+        - author_url: string (optional)
+        - date_published: ISO-8601 date (required)
+        - date_modified: ISO-8601 date (optional)
+        - image_url: string (required)
+        - publisher_name: string (required)
+        - publisher_logo_url: string (required)
+        - main_entity_url: string (required - the article URL)
+        - word_count: number (optional)
+      </fields>
+    </input>
+
+    <input name="faq_data" type="object" required-if="schema_type=FAQPage">
+      <fields>
+        - questions: array of objects (required)
+          - question: string
+          - answer: string
+      </fields>
+    </input>
+
+    <input name="product_data" type="object" required-if="schema_type=Product">
+      <fields>
+        - name: string (required)
+        - description: string (required)
+        - image_url: string (required)
+        - price: number (required)
+        - currency: string (required, e.g., "EUR")
+        - availability: string (required, e.g., "InStock")
+        - brand: string (optional)
+        - sku: string (optional)
+        - review_rating: number (optional, 1-5)
+        - review_count: number (optional)
+      </fields>
+    </input>
+
+    <input name="organization_data" type="object" required-if="schema_type=Organization">
+      <fields>
+        - name: string (required)
+        - url: string (required)
+        - logo_url: string (required)
+        - description: string (optional)
+        - social_profiles: array of strings (optional)
+        - contact_email: string (optional)
+        - contact_phone: string (optional)
+      </fields>
+    </input>
+  </inputs>
+
+  <outputs>
+    <output name="json_ld_schema" type="json">
+      <description>The generated JSON-LD structured data</description>
+    </output>
+    <output name="html_script_tag" type="string">
+      <description>Complete HTML script tag ready to paste into head section</description>
+    </output>
+  </outputs>
+
+  <instructions>
+    <step n="1">
+      <action>Validate inputs based on schema_type</action>
+      <details>
+        - Check that required fields for the selected schema type are present
+        - Validate URLs are well-formed
+        - Validate dates are ISO-8601 format
+        - Return error if validation fails
+      </details>
+    </step>
+
+    <step n="2">
+      <action>Generate JSON-LD based on schema_type</action>
+    </step>
+
+    <step n="3" condition="schema_type=Article OR schema_type=BlogPosting">
+      <action>Generate Article/BlogPosting schema</action>
+      <template>
+{
+  "@context": "https://schema.org",
+  "@type": "{schema_type}",
+  "headline": "{article_data.headline}",
+  "description": "{article_data.description}",
+  "image": "{article_data.image_url}",
+  "author": {
+    "@type": "Person",
+    "name": "{article_data.author_name}",
+    "url": "{article_data.author_url}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{article_data.publisher_name}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{article_data.publisher_logo_url}"
+    }
+  },
+  "datePublished": "{article_data.date_published}",
+  "dateModified": "{article_data.date_modified || article_data.date_published}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{article_data.main_entity_url}"
+  },
+  "wordCount": {article_data.word_count}
+}
+      </template>
+    </step>
+
+    <step n="4" condition="schema_type=FAQPage">
+      <action>Generate FAQPage schema</action>
+      <template>
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {for each question in faq_data.questions:
+      {
+        "@type": "Question",
+        "name": "{question.question}",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "{question.answer}"
+        }
+      }
+    }
+  ]
+}
+      </template>
+    </step>
+
+    <step n="5" condition="schema_type=Product">
+      <action>Generate Product schema</action>
+      <template>
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{product_data.name}",
+  "description": "{product_data.description}",
+  "image": "{product_data.image_url}",
+  "brand": {
+    "@type": "Brand",
+    "name": "{product_data.brand}"
+  },
+  "sku": "{product_data.sku}",
+  "offers": {
+    "@type": "Offer",
+    "price": "{product_data.price}",
+    "priceCurrency": "{product_data.currency}",
+    "availability": "https://schema.org/{product_data.availability}"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{product_data.review_rating}",
+    "reviewCount": "{product_data.review_count}"
+  }
+}
+      </template>
+    </step>
+
+    <step n="6" condition="schema_type=Organization">
+      <action>Generate Organization schema</action>
+      <template>
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{organization_data.name}",
+  "url": "{organization_data.url}",
+  "logo": "{organization_data.logo_url}",
+  "description": "{organization_data.description}",
+  "sameAs": [
+    {for each profile in organization_data.social_profiles:
+      "{profile}"
+    }
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "{organization_data.contact_email}",
+    "telephone": "{organization_data.contact_phone}",
+    "contactType": "customer service"
+  }
+}
+      </template>
+    </step>
+
+    <step n="7">
+      <action>Validate generated JSON-LD</action>
+      <details>
+        - Ensure valid JSON syntax
+        - Check all required schema.org properties are present
+        - Validate URLs are absolute paths
+      </details>
+    </step>
+
+    <step n="8">
+      <action>Generate HTML script tag</action>
+      <template>
+&lt;script type="application/ld+json"&gt;
+{json_ld_schema}
+&lt;/script&gt;
+      </template>
+    </step>
+
+    <step n="9">
+      <action>Return outputs</action>
+      <outputs>
+        - json_ld_schema: {json_object}
+        - html_script_tag: {html_string}
+      </outputs>
+    </step>
+  </instructions>
+
+  <usage-example>
+    <scenario>
+      Generate Article schema for a published blog post
+    </scenario>
+    <code>
+      schema = schema_generator.run(
+        schema_type: "Article",
+        article_data: {
+          headline: "10 Wege zu besseren Interviews",
+          description: "Lerne wie du durch strukturierte Interviews besseren Content erstellst.",
+          author_name: "Adrian Goldner",
+          author_url: "https://example.com/about",
+          date_published: "2025-10-22T10:00:00+00:00",
+          image_url: "https://example.com/images/interview-guide.jpg",
+          publisher_name: "ContentFlow Academy",
+          publisher_logo_url: "https://example.com/logo.png",
+          main_entity_url: "https://example.com/blog/interview-guide",
+          word_count: 2450
+        }
+      )
+
+      # Insert schema.html_script_tag into &lt;head&gt; section
+      webflow.insert_to_head(schema.html_script_tag)
+    </code>
+  </usage-example>
+
+  <validation>
+    <validator type="google-rich-results">
+      <url>https://search.google.com/test/rich-results</url>
+      <description>Test generated schema with Google's Rich Results Test</description>
+    </validator>
+    <validator type="schema-markup-validator">
+      <url>https://validator.schema.org/</url>
+      <description>Validate against official schema.org validator</description>
+    </validator>
+  </validation>
+
+  <notes>
+    - Always include schema on published articles for SEO benefits
+    - Test with Google Rich Results Test before publishing
+    - Keep publisher_logo_url as a square image (min 112x112px)
+    - Use specific schema types when possible (BlogPosting over Article)
+    - Can be invoked by Content-Publisher agent before Webflow upload
+  </notes>
+</task>

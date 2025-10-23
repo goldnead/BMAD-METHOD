@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task id="authenticity-scanner" name="Authenticity vs AI Detection Scanner" version="1.0.0-alpha" author="Adrian Goldner">
+  <description>
+    Advanced AI vs. Human Content Detection System designed specifically for Adrian's interview-based content.
+    Scans content for 8 AI fingerprint patterns and 5 authenticity markers to ensure content sounds like Adrian.
+
+    This system detects:
+    1. AI-generated formulaic patterns (contrast framing, rule of three overload)
+    2. Corporate jargon and buzzword usage
+    3. Generic, impersonal language patterns
+    4. Lack of personal experiences and concrete examples
+    5. Missing authentic human quirks and imperfections
+
+    And validates for:
+    1. Personal experiences and real stories
+    2. Concrete examples and specific details
+    3. Natural language patterns and conversational flow
+    4. Emotional expression and subjective opinions
+    5. Adrian-specific voice characteristics
+  </description>
+
+  <!-- Required input files -->
+  <inputs>
+    <input name="content-to-scan" required="true" description="Content to analyze for authenticity (newsletter draft, SEO article, etc.)"/>
+    <input name="content-type" required="true" description="Type: newsletter/seo-article/social-post/pillar-page"/>
+    <input name="tone-of-voice" required="false" default="bmad/cflow/data/tone-of-voice-guide.md" description="Adrian's voice guide for comparison"/>
+    <input name="reference-interview" required="false" description="Original interview protocol for authenticity baseline"/>
+    <input name="min-score" required="false" default="71" description="Minimum authenticity score for approval (0-100)"/>
+  </inputs>
+
+  <!-- Context files for authenticity detection -->
+  <context>
+    <file name="tone-of-voice" path="{tone-of-voice}" description="Adrian's specific voice patterns and phrases"/>
+    <file name="ai-patterns" path="bmad/cflow/config/ai-patterns.yaml" description="Known AI-generated content patterns"/>
+    <file name="authenticity-markers" path="bmad/cflow/config/authenticity-markers.yaml" description="Markers of genuine human content"/>
+    <file name="adrian-voice-signatures" path="bmad/cflow/data/adrian-voice-signatures.yaml" description="Adrian's unique linguistic patterns"/>
+    <file name="content-benchmarks" path="bmad/cflow/data/content-benchmarks.yaml" description="Benchmark scores for different content types"/>
+  </context>
+
+  <!-- Output configuration -->
+  <outputs>
+    <output name="authenticity-report" path="{output-folder}/authenticity-report-{timestamp}.md" format="markdown" description="Detailed authenticity analysis report"/>
+    <output name="authenticity-score" path="{output-folder}/authenticity-score-{timestamp}.yaml" format="yaml" description="Numerical score and breakdown"/>
+    <output name="improvement-suggestions" path="{output-folder}/improvement-suggestions-{timestamp}.md" format="markdown" description="Specific suggestions for increasing authenticity"/>
+  </outputs>
+
+  <!-- Authenticity scanning logic -->
+  <instructions>
+    <step id="load-detection-patterns">
+      <action>load_context</action>
+      <context>ai-patterns, authenticity-markers, adrian-voice-signatures</context>
+      <parameters>
+        <param name="version">latest</param>
+        <param name="content-type">{content-type}</param>
+      </parameters>
+    </step>
+
+    <step id="parse-content">
+      <action>analyze_text</action>
+      <input>{content-to-scan}</input>
+      <analysis-types>
+        <type>linguistic-patterns</type>
+        <type>sentence-structure</type>
+        <type>word-choice</type>
+        <type>personal-expressions</type>
+        <type>conversational-elements</type>
+        <type>emotional-indicators</type>
+      </analysis-types>
+    </step>
+
+    <step id="scan-ai-fingerprints">
+      <action>detect_ai_patterns</action>
+      <patterns>
+        <pattern id="contrast-framing" penalty="8" description="Es geht nicht um X, sondern um Y">
+          <regex>nicht(.*?), sondern</regex>
+          <context>Overused contrast opening</context>
+          <example>"Es geht nicht um Technik, sondern um Gefühl"</example>
+        </pattern>
+
+        <pattern id="rule-of-three-overload" penalty="6" description="Excessive use of 3-item lists">
+          <regex>\b(erstens|zweitens|drittens|erstens, zweitens, drittens)\b</regex>
+          <context>Predictable AI structure pattern</context>
+          <example>"Erstens, Zweitens, Drittens..." repeated throughout</example>
+        </pattern>
+
+        <pattern id="infomercial-transitions" penalty="10" description="Dramatic TV-commercial style transitions">
+          <regex>\b(Die brutale Wahrheit|Überraschenderweise|Was du nicht wusstest|Stell dir vor)\b</regex>
+          <context>Salesy, attention-grabbing phrases</context>
+          <example>"Die brutale Wahrheit ist..."</example>
+        </pattern>
+
+        <pattern id="corporate-jargon" penalty="5" description="Business buzzwords and corporate speak">
+          <regex>\b(implementieren|optimieren|synergieren|leverage|strategisch|methodisch)\b</regex>
+          <context>Impersonal business language</context>
+          <example>"implementieren Sie diese Methode"</example>
+        </pattern>
+
+        <pattern id="generic-fillers" penalty="4" description="Non-committal, vague language">
+          <regex>\b(im Grunde|im Wesentlichen|grundsätzlich|im Allgemeinen|eher)\b</regex>
+          <context>Avoids taking clear stance</context>
+          <example>"Im Grunde kann man sagen..."</example>
+        </pattern>
+
+        <pattern id="passive-voice-overuse" penalty="6" description="Excessive passive voice constructions">
+          <regex>wird\s+\w+|kann\s+\w+\s+werden|sollte\s+\w+\s+werden</regex>
+          <context>Impersonal, indirect communication</context>
+          <example>"Es wird empfohlen dass..."</example>
+        </pattern>
+
+        <pattern id="formulaic-introductions" penalty="7" description="Predictable article opening patterns">
+          <regex>\b(In der heutigen Zeit|In der modernen Welt|Heutzutage|In unserem hektischen Alltag)\b</regex>
+          <context>Generic, overused intros</context>
+          <example>"In der heutigen Zeit ist..."</example>
+        </pattern>
+
+        <pattern id="listicle-addiction" penalty="5" description="Every point is a numbered list item">
+          <regex>^\d+\.\s+.*$</regex>
+          <context>Lack of narrative flow</context>
+          <example>Entire content is just numbered lists</example>
+        </pattern>
+      </patterns>
+    </step>
+
+    <step id="scan-authenticity-markers">
+      <action>detect_human_patterns</action>
+      <markers>
+        <marker id="personal-experience" points="8" description="First-person experiences and stories">
+          <indicators>
+            <indicator>Ich habe erlebt...</indicator>
+            <indicator>Bei mir passiert...</indicator>
+            <indicator>Als ich damals...</indicator>
+            <indicator>Meine Erfahrung mit...</indicator>
+          </indicators>
+          <weight>Strong authenticity signal</weight>
+        </marker>
+
+        <marker id="concrete-examples" points="6" description="Specific, tangible examples">
+          <indicators>
+            <indicator>Specific numbers and data</indicator>
+            <indicator>Names of choirs or people</indicator>
+            <indicator>Detailed scenarios</indicator>
+            <indicator>Step-by-step processes</indicator>
+          </indicators>
+          <weight>High authenticity signal</weight>
+        </marker>
+
+        <marker id="emotional-expression" points="7" description="Genuine feelings and emotions">
+          <indicators>
+            <indicator>Ich fühle mich...</indicator>
+            <indicator>Was mich frustriert...</indicator>
+            <indicator>Ich war begeistert...</indicator>
+            <indicator>Ehrlich gesagt...</indicator>
+          </indicators>
+          <weight>Very strong authenticity signal</weight>
+        </marker>
+
+        <marker id="opinion-statement" points="9" description="Clear personal opinions and preferences">
+          <indicators>
+            <indicator>Meiner Meinung nach...</indicator>
+            <indicator>Ich persönlich finde...</indicator>
+            <indicator>Was ich empfehlen würde...</indicator>
+            <indicator>Ich bin überzeugt dass...</indicator>
+          </indicators>
+          <weight>Maximum authenticity signal</weight>
+        </marker>
+
+        <marker id="adrian-voice-signature" points="10" description="Adrian's specific phrases and patterns">
+          <indicators>
+            <indicator>Was ich aus meiner Erfahrung gelernt habe...</indicator>
+            <indicator>Bei mir hat sich bewährt...</indicator>
+            <indicator>Ein Fehler, den ich oft sehe...</indicator>
+            <indicator>Lass mich dir zeigen, wie...</indicator>
+          </indicators>
+          <weight>Perfect authenticity signal</weight>
+        </marker>
+      </markers>
+    </step>
+
+    <step id="analyze-voice-alignment">
+      <action>compare_voice</action>
+      <comparison-targets>
+        <target name="adrian-phrases">
+          <expected-phrases>
+            <phrase>Was ich aus meiner Erfahrung gelernt habe...</phrase>
+            <phrase>Bei mir hat sich bewährt...</phrase>
+            <phrase>Ich muss zugeben...</phrase>
+            <phrase>Ehrlich gesagt...</phrase>
+            <phrase>Wenn ich zurückblicke auf...</phrase>
+          </expected-phrases>
+          <scoring>High value for voice matching</scoring>
+        </target>
+
+        <target name="conversational-style">
+          <expected-elements>
+            <element>Direct questions to reader</element>
+            <element>Personal anecdotes</element>
+            <element>Informal but professional tone</element>
+            <element>German "Du" form consistently</element>
+          </expected-elements>
+          <scoring>Medium value for style</scoring>
+        </target>
+
+        <target name="structure-patterns">
+          <expected-elements>
+            <element>Story-based explanations</element>
+            <element>Practical tips section</element>
+            <element>Question-answer format</element>
+            <element>Before-after comparisons</element>
+          </expected-elements>
+          <scoring>Medium value for structure</scoring>
+        </target>
+      </comparison-targets>
+    </step>
+
+    <step id="calculate-authenticity-score">
+      <action>compute_score</action>
+      <formula>
+        base_score = 100
+
+        # Subtract AI fingerprint penalties
+        total_ai_penalties = sum(detected_ai_patterns × penalty_weights)
+
+        # Add authenticity marker points
+        total_authenticity_points = sum(detected_authenticity_markers × point_weights)
+
+        # Add voice alignment bonus
+        voice_alignment_bonus = voice_alignment_score × 0.2
+
+        # Calculate final score
+        authenticity_score = base_score - total_ai_penalties + total_authenticity_points + voice_alignment_bonus
+
+        # Ensure score stays within 0-100 range
+        final_score = max(0, min(100, authenticity_score))
+      </formula>
+
+      <score-interpretation>
+        <range min="86" max="100">Exzellent authentisch - 100% Adrian's Stimme</range>
+        <range min="71" max="85">Gut authentisch - Klar menschlich</range>
+        <range min="56" max="70">Moderat authentisch - Menschliche Elemente erkennbar</range>
+        <range min="41" max="55">Leicht AI-generiert - Menschliche Anteile vorhanden</range>
+        <range min="0" max="40">Stark AI-generiert - Überarbeitung erforderlich</range>
+      </score-interpretation>
+    </step>
+
+    <step id="generate-detailed-report">
+      <action>create_markdown_report</action>
+      <template>
+        # Authentizitäts-Scan Report
+
+        **Inhalt analysiert:** {content-type}
+        **Datum:** {current-datetime}
+        **Authentizitäts-Score:** {final-score}/100
+
+        ## 🎯 Zusammenfassung
+
+        **Status:** {score-status}
+        **Empfehlung:** {recommendation}
+
+        ## 🔍 AI-Fingerprint Analyse
+
+        ### Gefundene Muster ({ai-patterns-count}):
+
+        [AI_PATTERNS_LIST]
+
+        **Gesamtabzug:** {total-penalty} Punkte
+
+        ## ✅ Authentizitäts-Marker Analyse
+
+        ### Gefundene menschliche Elemente ({authenticity-markers-count}):
+
+        [AUTHENTICITY_MARKERS_LIST]
+
+        **Gesamtpunkte:** {total-points} Punkte
+
+        ## 🎭 Adrian's Stimme Analyse
+
+        ### Voice Alignment Score: {voice-alignment-score}/100
+
+        **Gefundene Adrian-Signaturen:**
+        [ADRIAN_PHRASES_FOUND]
+
+        **Fehlende Adrian-Elemente:**
+        [MISSING_ADRIAN_ELEMENTS]
+
+        ## 📊 Detaillierte Punktzahl
+
+        | Komponente | Punkte | Max |
+        |-------------|--------|-----|
+        | Basis-Score | 100 | 100 |
+        | AI-Fingerprint Abzüge | -{ai-penalties} | -40 |
+        | Authentizitäts-Punkte | +{authenticity-points} | +40 |
+        | Voice Alignment Bonus | +{voice-bonus} | +20 |
+        | **GESAMT** | **{final-score}** | **100** |
+
+        ## 🛠️ Verbesserungsempfehlungen
+
+        {IMPROVEMENT_RECOMMENDATIONS}
+
+        ## 📋 Qualitätstore
+
+        **Mindest-Score für Publishing:** {min-score}
+        **Aktuell:** {final-score}
+        **Status:** {publishing-status}
+
+        {if-score-below-min}
+        ## ⚠️ AKTION ERFORDERLICH
+
+        Der Content erreicht nicht den Mindest-Score für Publishing. Bitte folgende Punkte überarbeiten:
+
+        1. **AI-Muster entfernen:** {ai-improvements}
+        2. **Menschliche Elemente hinzufügen:** {authenticity-improvements}
+        3. **Adrian's Voice verbessern:** {voice-improvements}
+        {/if-score-below-min}
+
+        {if-score-above-min}
+        ## ✅ VERÖFFENTLICHUNG BEREIT
+
+        Der Content entspricht Adrian's authentischem Stil und kann veröffentlicht werden.
+
+        **Empfohlene nächste Schritte:**
+        1. Inhalt final review durchführen
+        2. CTA-Prüfung und Optimierung
+        3. Publishing-Workflow starten
+        {/if-score-above-min}
+      </template>
+    </step>
+
+    <step id="create-improvement-suggestions">
+      <action>generate_suggestions</action>
+      <suggestions>
+        <category name="ai-pattern-removal">
+          <pattern>contrast-framing-removal">
+            <before>"Es geht nicht um Technik, sondern um Gefühl"</before>
+            <after>"Viele denken, es geht nur um Technik. Aber für mich war das Gefühl entscheidend."</after>
+            <explanation>Ersetze formelle Kontrast-Framing mit persönlicher Erfahrung</explanation>
+          </pattern>
+
+          <pattern>corporate-jargon-replacement">
+            <before>"Implementieren Sie diese Methode"</before>
+            <after>"Lass mich dir zeigen, wie du diese Methode anwendest"</after>
+            <explanation>Ersetze formelle Business-Sprache mit direkter Ansprache</explanation>
+          </pattern>
+
+          <pattern>passive-voice-correction">
+            <before>"Es wird empfohlen, dass..."</before>
+            <after>"Was ich dir empfehlen würde, ist..."</after>
+            <explanation>Aktive, persönliche Sprache statt Passivkonstruktionen</explanation>
+          </pattern>
+        </category>
+
+        <category name="authenticity-enhancement">
+          <pattern>add-personal-story">
+            <insert-point>After stating general principle</insert-point>
+            <example>"Als ich diese Technik das erste Mal mit meinem Chor ausprobiert habe, war ich skeptisch. Aber nach zwei Wochen war der Unterschied im Klang erstaunlich."</example>
+            <explanation>Füge persönliche Geschichte oder Erfahrung ein</explanation>
+          </pattern>
+
+          <pattern>add-concrete-example">
+            <insert-point>When explaining abstract concepts</insert-point>
+            <example>"Stell dir vor, ein Tenor singt 'la' und du zeigst ihm mit einer einfachen Handbewegung, wie er den Klang weiter oben im Kopf platzieren kann. Das ist das, was ich meine."</example>
+            <explanation>Mache abstrakte Konzepte mit konkreten Beispielen verständlich</explanation>
+          </pattern>
+
+          <pattern>add-personal-opinion">
+            <insert-point>When giving advice</insert-point>
+            <example>"Mein persönlicher Favorit unter allen CVT-Techniken ist der 'Curbing Mode', weil er so vielseitig einsetzbar ist. Aber am Anfang fand ich ihn am schwierigsten."</example>
+            <explanation>Füge klare persönliche Meinungen und Vorlieben hinzu</explanation>
+          </pattern>
+        </category>
+      </suggestions>
+    </step>
+
+    <step id="validate-scan-results">
+      <action>validate_analysis</action>
+      <criteria>
+        <criterion>All 8 AI patterns scanned and scored</criterion>
+        <criterion>All 5 authenticity markers detected and weighted</criterion>
+        <criterion>Voice alignment properly calculated</criterion>
+        <criterion>Score between 0-100 range</criterion>
+        <criterion>Improvement suggestions are specific and actionable</criterion>
+        <criterion>Report includes publishing recommendation</criterion>
+      </criteria>
+    </step>
+  </instructions>
+
+  <!-- Error handling -->
+  <error_handling>
+    <error type="missing-content">
+      <action>prompt_for_input</action>
+      <message>Content to scan is required for authenticity analysis.</message>
+    </error>
+
+    <error type="file-read-error">
+      <action>retry_with_alternative</action>
+      <message>Unable to read content file. Please check file path and permissions.</message>
+    </error>
+
+    <error type="pattern-loading-failed">
+      <action>use_fallback_patterns</action>
+      <message>Using built-in authenticity patterns for analysis.</message>
+    </error>
+
+    <error type="scoring-error">
+      <action>use_default_scoring</action>
+      <message>Scoring calculation failed - using simplified scoring method.</message>
+    </error>
+  </error_handling>
+
+  <!-- Success criteria -->
+  <success_criteria>
+    <criterion>All 8 AI fingerprint patterns detected and scored</criterion>
+    <criterion>All 5 authenticity markers identified and valued</criterion>
+    <criterion>Voice alignment score calculated against Adrian's guide</criterion>
+    <criterion>Final authenticity score between 0-100</criterion>
+    <criterion>Detailed markdown report generated with actionable recommendations</criterion>
+    <criterion>YAML score breakdown created for tracking</criterion>
+    <criterion>Publishing decision provided based on minimum score threshold</criterion>
+  </success_criteria>
+</task>

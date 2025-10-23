@@ -1,0 +1,84 @@
+# SEO Planning Workflow Configuration
+name: "seo-planning"
+description: "Monatliche Content-Planung basierend auf GSC-Datenanalyse, Topic-Map Review und Priority-Matrix für strategische SEO-Content-Entwicklung"
+author: "Adrian Goldner"
+
+# Critical variables from config
+config_source: "{project-root}/bmad/cflow/config.yaml"
+output_folder: "{config_source}:output_folder"
+user_name: "{config_source}:user_name"
+communication_language: "{config_source}:communication_language"
+date: system-generated
+
+# Required Data Files
+topic_map_master: "{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml"
+gsc_data_current: "{project-root}/bmad/cflow/data/gsc-exports/current-month.csv"
+gsc_data_previous: "{project-root}/bmad/cflow/data/gsc-exports/previous-month.csv"
+analytics_data: "{project-root}/bmad/cflow/data/analytics/monthly-analytics.csv"
+priority_matrix: "{project-root}/bmad/cflow/data/priority-matrix.yaml"
+seasonal_trends: "{project-root}/bmad/cflow/data/seasonal-trends.csv"
+
+# Recommended inputs for context
+recommended_inputs:
+  - competitor_analysis: "{project-root}/bmad/cflow/data/competitor-analysis/"
+  - keyword_research: "{project-root}/bmad/cflow/data/keyword-research/"
+  - content_performance: "{project-root}/bmad/cflow/data/published/content-performance.csv"
+  - user_feedback: "{project-root}/bmad/cflow/data/user-feedback/"
+
+# Module path and component files
+installed_path: "{project-root}/bmad/cflow/workflows/seo-planning"
+template: "{installed_path}/template.md"
+instructions: "{installed_path}/instructions.md"
+validation: "{installed_path}/checklist.md"
+
+# Output configuration
+default_output_file: "{output_folder}/monthly-content-plan-{date}.md"
+gsc_analysis_report: "{output_folder}/gsc-analysis-{date}.md"
+topic_map_review: "{output_folder}/topic-map-review-{date}.md"
+priority_analysis: "{output_folder}/priority-analysis-{date}.md"
+resource_plan: "{output_folder}/resource-plan-{date}.md"
+
+# Tool Requirements
+required_tools:
+  - "Google Search Console API":
+      description: "Für automatischen Daten-Import und Analyse"
+      setup_link: "https://developers.google.com/webmaster-tools/v1/how-tos/authorizing"
+  - "Google Analytics API":
+      description: "Für Traffic- und Conversion-Daten"
+      setup_link: "https://developers.google.com/analytics/devguides/reporting/core/v4/"
+
+# Workflow-specific settings
+planning_horizon: "monthly" # monthly | quarterly
+content_velocity: 8 # Anzahl Artikel pro Monat
+min_priority_score: 70 # Mindest-Priority-Score für Topics
+include_seasonal_content: true
+competitive_analysis: true
+
+# Content Planning Parameters
+content_types:
+  - "pillar_article"
+  - "cluster_article"
+  - "newsletter"
+  - "social_media"
+
+# Priority Matrix Weights
+priority_weights:
+  search_volume: 0.3
+  competition: 0.25
+  business_value: 0.25
+  trending_score: 0.2
+
+# Seasonal Planning
+seasonal_adjustments: true
+holiday_content: true
+trending_topics: true
+
+# Team Configuration
+content_team:
+  - role: "Subject Matter Expert"
+    name: "{user_name}"
+    availability: "30 hours/month"
+  - role: "Content Writer"
+    availability: "40 hours/month"
+  - role: "SEO Specialist"
+    availability: "20 hours/month"

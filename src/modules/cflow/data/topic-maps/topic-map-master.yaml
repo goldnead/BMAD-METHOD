@@ -1,0 +1,247 @@
+# Topic Map Master - ContentFlow Module
+# Master-Karte aller Content-Themen und ihrer Beziehungen
+# Version: 1.0.0-alpha
+# Created: 2025-10-22
+
+# Topic Map Configuration
+version: "1.0.0-alpha"
+created_by: "Adrian Goldner"
+last_updated: "2025-10-22"
+language: "German"
+
+# Main Topic Categories
+topic_categories:
+  content_marketing:
+    name: "Content Marketing"
+    description: "Content-Marketing Strategie und Taktiken"
+    priority: "high"
+    pillar_topics:
+      - content_creation
+      - content_distribution
+      - content_analytics
+      - content_optimization
+
+  seo:
+    name: "SEO & Suchmaschinenoptimierung"
+    description: "SEO-Strategie, technische Optimierung und Rankings"
+    priority: "high"
+    pillar_topics:
+      - onpage_seo
+      - offpage_seo
+      - technical_seo
+      - local_seo
+      - content_seo
+
+  entrepreneurship:
+    name: "Unternehmertum & Business Building"
+    description: "Business-Aufbau, Strategie und Skalierung"
+    priority: "high"
+    pillar_topics:
+      - business_models
+      - scaling_strategies
+      - team_building
+      - product_launch
+      - cash_flow
+
+  ai_tools:
+    name: "KI-Tools & Automatisierung"
+    description: "AI-gestützte Tools für Produktivität und Wachstum"
+    priority: "medium"
+    pillar_topics:
+      - ai_content_creation
+      - ai_automation
+      - ai_analytics
+      - prompt_engineering
+
+# Pillar Pages (Main Content Hubs)
+pillar_pages:
+  content_creation:
+    title: "Content Creation - Der komplette Leitfaden"
+    url: "/content-creation"
+    target_keywords:
+      primary: "content creation guide"
+      secondary:
+        - "content creation process"
+        - "how to create content"
+        - "content marketing guide"
+    cluster_articles:
+      - "interview-based-content"
+      - "content-writing-tips"
+      - "content-repurposing"
+      - "content-optimization"
+    content_brief:
+      target_audience: "Content Creator, Marketer, Business Owner"
+      search_intent: "Educational - Process & Guidelines"
+      word_count: 3000
+      content_type: "Pillar Page"
+      internal_links:
+        - "/content-distribution"
+        - "/content-analytics"
+        - "/ai-automation"
+
+  content_distribution:
+    title: "Content Distribution - Maximale Reichweite"
+    url: "/content-distribution"
+    target_keywords:
+      primary: "content distribution strategy"
+      secondary:
+        - "social media distribution"
+        - "email marketing distribution"
+        - "content amplification"
+    cluster_articles:
+      - "linkedin-distribution-tips"
+      - "instagram-content-strategy"
+      - "email-newsletter-optimization"
+      - "content-scheduling-tools"
+    content_brief:
+      target_audience: "Marketer, Business Owner, Social Media Manager"
+      search_intent: "Actionable - Strategy & Implementation"
+      word_count: 2500
+      content_type: "Pillar Page"
+      internal_links:
+        - "/content-creation"
+        - "/analytics-tracking"
+        - "/ai-automation"
+
+  onpage_seo:
+    title: "On-Page SEO - Optimierungs-Meisterkurs"
+    url: "/onpage-seo"
+    target_keywords:
+      primary: "on-page seo optimization"
+      secondary:
+        - "seo best practices"
+        - "technical seo guide"
+        - "content seo optimization"
+    cluster_articles:
+      - "meta-tag-optimization"
+      - "content-structure-seo"
+      - "internal-linking-strategy"
+      - "keyword-research-advanced"
+    content_brief:
+      target_audience: "SEO Manager, Content Creator, Business Owner"
+      search_intent: "Educational - Technical Guidelines"
+      word_count: 4000
+      content_type: "Technical Guide"
+      internal_links:
+        - "/content-creation"
+        - "/technical-seo"
+        - "/content-analytics"
+
+  business_models:
+    title: "Business Models - Profitable Strukturen"
+    url: "/business-models"
+    target_keywords:
+      primary: "successful business models"
+      secondary:
+        - "digital business models"
+        - "subscription business models"
+        - "scalable business ideas"
+    cluster_articles:
+      - "subscription-business-growth"
+      - "digital-product-pricing"
+      - "business-scaling-strategies"
+      - "revenue-stream-optimization"
+    content_brief:
+      target_audience: "Entrepreneur, Business Owner, Startup Founder"
+      search_intent: "Strategic - Planning & Implementation"
+      word_count: 3500
+      content_type: "Strategic Guide"
+      internal_links:
+        - "/scaling-strategies"
+        - "/team-building"
+        - "/cash-flow-management"
+
+# Content Production Pipeline
+production_pipeline:
+  weekly_goals:
+    articles: 1
+    newsletters: 1
+    social_posts: 5
+    analytics_reports: 1
+
+  content_types:
+    newsletter:
+      platform: "brevo"
+      template: "newsletter-template.md"
+      scheduling: "weekly"
+
+    seo_article:
+      platform: "webflow"
+      template: "seo-article-template.md"
+      scheduling: "weekly"
+
+    social_media:
+      platforms: ["linkedin", "instagram", "x", "facebook"]
+      templates:
+        linkedin: "linkedin-post-template.md"
+        instagram: "instagram-post-template.md"
+        x: "x-thread-template.md"
+        facebook: "facebook-post-template.md"
+      scheduling: "automated"
+
+# Keyword Strategy
+keyword_strategy:
+  quick_win_keywords:
+    - "interview based content creation"
+    - "content marketing automation"
+    - "seo content optimization checklist"
+    - "business scaling strategies 2025"
+    - "ai tools for content creators"
+
+  long_t_opportunities:
+    - "how to build scalable content creation workflow"
+    - "content marketing strategies for small business"
+    - "technical seo implementation guide"
+    - "sustainable business growth models"
+
+# Performance Tracking
+performance_metrics:
+  traffic_goals:
+    monthly_visitors: 10000
+    organic_traffic_percentage: 60
+    email_subscribers: 1000
+
+  engagement_targets:
+    email_open_rate: 25
+    social_engagement_rate: 5
+    content_share_rate: 2
+
+  conversion_goals:
+    lead_generation_rate: 2
+    newsletter_signup_rate: 3
+    social_cta_click_rate: 1
+
+# Editorial Calendar (Sample)
+editorial_calendar:
+  2025-10:
+    week_1:
+      topic: "content_creation"
+      angle: "Interview-based Content for Authentic Marketing"
+      target_keywords: ["interview content marketing", "authentic content creation"]
+
+    week_2:
+      topic: "onpage_seo"
+      angle: "Technical SEO Implementation Guide"
+      target_keywords: ["technical seo checklist", "on-page optimization guide"]
+
+    week_3:
+      topic: "business_models"
+      angle: "Scalable Digital Business Models"
+      target_keywords: ["scalable online business", "digital revenue streams"]
+
+    week_4:
+      topic: "content_distribution"
+      angle: "Multi-Platform Content Distribution Strategy"
+      target_keywords: ["content distribution automation", "social media content strategy"]
+
+# Quick Wins Priority List
+quick_wins:
+  high_priority:
+    - content_creation: "Interview-based content creation guide"
+    - onpage_seo: "Technical SEO implementation checklist"
+    - business_models: "Scalable business models guide"
+
+  medium_priority:
+    - content_distribution: "Social media automation guide"
+    - ai_tools: "AI content creation tools review"
+    - entrepreneurship: "Team building for remote businesses"

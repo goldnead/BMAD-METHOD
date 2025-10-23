@@ -1,0 +1,232 @@
+# ContentFlow Module Installation Configuration
+# This file defines installation questions and module configuration values
+
+code: cflow
+name: "ContentFlow"
+default_selected: false
+
+# Welcome message shown during installation
+prompt:
+  - "Willkommen bei ContentFlow!"
+  - "Das Interview-basierte Content-Produktions-System mit KI-Agenten-Flotte."
+  - "Dieses Modul erstellt wöchentlich authentischen, SEO-optimierten Content:"
+  - "  • Newsletter-Posts mit deiner persönlichen Stimme"
+  - "  • SEO-Artikel für deine Website (Webflow)"
+  - "  • Social Media Posts für 5 Plattformen"
+  - "  • Monatliche Analytics-Reports"
+  - ""
+  - "Lass uns dein Content-System konfigurieren!"
+
+# Core config values are automatically inherited:
+## user_name
+## communication_language
+## document_output_language
+## output_folder
+
+# ============================================================================
+# API-KEYS & CREDENTIALS
+# ============================================================================
+
+google_search_console_api:
+  prompt: "Google Search Console API Key (OAuth oder Service Account JSON)"
+  default: ""
+  result: "{value}"
+  required: true
+  description: "Erforderlich für SEO-Keyword-Analyse und Topic-Research"
+
+webflow_api:
+  prompt: "Webflow API Token (aus Account Settings → Integrations)"
+  default: ""
+  result: "{value}"
+  required: true
+  description: "Erforderlich zum Veröffentlichen von Artikeln in Webflow CMS"
+
+brevo_api:
+  prompt: "Brevo API Key (aus Account → API-Keys)"
+  default: ""
+  result: "{value}"
+  required: true
+  description: "Erforderlich für Newsletter-Versand und Lead-Tracking"
+
+plausible_api:
+  prompt: "Plausible.io API Key (optional - für erweiterte Analytics)"
+  default: ""
+  result: "{value}"
+  required: false
+  description: "Optional: Für Traffic-Analyse und Conversion-Tracking. Kann später nachgetragen werden."
+
+thrivecart_api:
+  prompt: "Thrivecart API Key (optional - für Revenue-Tracking)"
+  default: ""
+  result: "{value}"
+  required: false
+  description: "Optional: Für Conversion- und Umsatz-Tracking im Analytics-Report"
+
+social_media_api:
+  prompt: "Social Media Scheduler API Key - Publer oder Metricool (optional)"
+  default: ""
+  result: "{value}"
+  required: false
+  description: "Optional: Für automatisches Scheduling von Social-Media-Posts"
+
+# ============================================================================
+# CONTENT STRATEGY
+# ============================================================================
+
+monthly_article_goal:
+  prompt: "Wie viele Artikel pro Monat möchtest du erstellen?"
+  default: "4"
+  result: "{value}"
+  single-select:
+    - value: "4"
+      label: "4 Artikel/Monat (1 pro Woche)"
+      description: "Entspannter Rhythmus - ideal für Nebenprojekte"
+    - value: "6"
+      label: "6 Artikel/Monat (1-2 pro Woche)"
+      description: "Moderater Rhythmus - gute Balance"
+    - value: "8"
+      label: "8 Artikel/Monat (2 pro Woche)"
+      description: "Intensiver Rhythmus - schneller SEO-Aufbau"
+
+newsletter_frequency:
+  prompt: "Wie oft versendest du deinen Newsletter?"
+  default: "weekly"
+  result: "{value}"
+  single-select:
+    - value: "weekly"
+      label: "Wöchentlich"
+      description: "Jede Woche ein Newsletter (empfohlen für Engagement)"
+    - value: "bi-weekly"
+      label: "Zweiwöchentlich"
+      description: "Alle 2 Wochen ein Newsletter"
+    - value: "monthly"
+      label: "Monatlich"
+      description: "Einmal pro Monat (minimal für SEO-Effekt)"
+
+social_platforms:
+  prompt: "Auf welchen Social-Media-Plattformen willst du Content verteilen?"
+  default: ["linkedin", "instagram", "x", "facebook"]
+  result: "{value}"
+  multi-select:
+    - value: "linkedin"
+      label: "LinkedIn"
+      description: "Professional Network - ideal für B2B & Thought Leadership"
+    - value: "instagram"
+      label: "Instagram"
+      description: "Visual Platform - Reels, Karussells, Quotes"
+    - value: "x"
+      label: "X (Twitter)"
+      description: "Micro-Blogging - Thread-Format"
+    - value: "facebook"
+      label: "Facebook"
+      description: "Community-Focus - Story-Format"
+    - value: "threads"
+      label: "Threads"
+      description: "Meta's Text-Platform - ähnlich X"
+
+# ============================================================================
+# AUTOMATION LEVEL
+# ============================================================================
+
+automation_level:
+  prompt: "Wie viel Automatisierung möchtest du? (bestimmt Human-in-Loop-Frequenz)"
+  default: "semi-auto"
+  result: "{value}"
+  single-select:
+    - value: "manual"
+      label: "Manuell - Maximale Kontrolle"
+      description: "Du approvierst JEDEN Schritt: Interview-Fragen, Drafts, Publishing. Ideal für Perfektionisten."
+    - value: "semi-auto"
+      label: "Semi-Auto - Balanciert (Empfohlen)"
+      description: "Du approvierst: Angle-Auswahl, Interview-Antworten, finale Drafts. System macht Rest automatisch."
+    - value: "full-auto"
+      label: "Voll-Auto - Maximale Effizienz"
+      description: "System führt Interview & Publishing automatisch durch. Du reviewst nur finale Drafts vor Go-Live."
+
+# ============================================================================
+# STATIC PATHS (nicht abgefragt, automatisch gesetzt)
+# ============================================================================
+
+# Topic Map & Content-Daten
+topic_map_path:
+  result: "{project-root}/bmad/cflow/data/topic-maps/topic-map-master.yaml"
+
+interview_archive_path:
+  result: "{project-root}/bmad/cflow/data/interviews"
+
+analytics_data_path:
+  result: "{project-root}/bmad/cflow/data/analytics"
+
+# Asset-Dateien (werden während Installation kopiert)
+tone_of_voice_guide:
+  result: "{project-root}/bmad/cflow/_module-installer/assets/tone-of-voice.md"
+
+seo_masterplan:
+  result: "{project-root}/bmad/cflow/_module-installer/assets/seo-masterplan.md"
+
+# Template-Pfade
+content_templates_path:
+  result: "{project-root}/bmad/cflow/templates/content"
+
+report_templates_path:
+  result: "{project-root}/bmad/cflow/templates/reports"
+
+social_templates_path:
+  result: "{project-root}/bmad/cflow/templates/social"
+
+# ============================================================================
+# ADVANCED SETTINGS (Static - Expert-Level)
+# ============================================================================
+
+# SEO & Validation
+seo_check_strictness:
+  result: "standard"
+  # Options: "lenient" | "standard" | "strict"
+  # lenient: Warnungen, aber kein Blocking
+  # standard: Blockt bei kritischen SEO-Fehlern
+  # strict: Blockt bei allen SEO-Abweichungen
+
+authenticity_min_score:
+  result: 71
+  # Minimum Authenticity-Score (0-100) zum Publishing
+  # 0-50: Stark AI-generiert
+  # 51-70: Moderate AI-Fingerprints
+  # 71-85: Gut authentisch
+  # 86-100: Exzellent authentisch
+
+max_validation_iterations:
+  result: 2
+  # Maximale Anzahl Writer → Validator → Writer Loops
+  # Verhindert Endlos-Schleifen bei schwierigen Themen
+
+# Publishing
+auto_index_gsc:
+  result: true
+  # Automatisch Google Search Console Indexierung triggern nach Publishing
+
+save_interview_transcripts:
+  result: true
+  # Interview-Protokolle archivieren für spätere Referenz
+
+# Social Media
+social_auto_schedule:
+  result: false
+  # Automatisch Social Posts schedulen (true) oder nur Drafts erstellen (false)
+  # Empfohlen: false für initiale Review
+
+# Analytics
+analytics_tracking_enabled:
+  result: true
+  # Monatliche Analytics-Reports generieren
+
+analytics_telegram_notifications:
+  result: false
+  # Telegram-Benachrichtigungen für Reports senden
+  # Requires: Telegram Bot Token (separate Config)
+
+# Module Metadata
+module_version:
+  result: "1.0.0-alpha"
+
+installation_date:
+  result: "{date:system-generated}"

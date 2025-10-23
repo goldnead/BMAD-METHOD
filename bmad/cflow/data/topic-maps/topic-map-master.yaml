@@ -1,0 +1,490 @@
+# Topic Map Master - ContentFlow Module
+# Master-Karte aller Content-Themen und ihrer Beziehungen
+# Version: 1.0.0-alpha
+# Created: 2025-10-22
+
+# Topic Map Configuration
+version: "1.0.0-alpha"
+created_by: "Adrian Goldner"
+last_updated: "2025-10-22"
+language: "German"
+
+# Main Topic Categories (CVT-Chorleader-Fokus)
+topic_categories:
+  cvt_technique:
+    name: "CVT Stimmtechnik & Gesangstechnik"
+    description: "Complete Vocal Technique (CVT) für Chorleiter:innen und ambitionierte Sänger:innen"
+    priority: "high"
+    pillar_topics:
+      - grundlagen_cvt
+      - stimmbildung_chor
+      - fehlerquellen_loesungen
+      - praktische_anwendung
+
+  blending_intonation:
+    name: "Blending & Intonation"
+    description: "Homogener Chorklang und saubere Intonation ohne Individualitätsverlust"
+    priority: "high"
+    pillar_topics:
+      - blending_basics
+      - intonation_training
+      - register_ueberblendung
+      - troubleshooting
+
+  choir_leadership:
+    name: "Chorleitung & Ensemble-Management"
+    description: "Moderne Chorführung, Probenmethodik und Motivationstechniken"
+    priority: "high"
+    pillar_topics:
+      - probenmethodik
+      - motivationsstrategien
+      - stimmbildung_gruppe
+      - performance_coaching
+
+  vocal_health:
+    name: "Stimmgesundheit & Prävention"
+    description: "Vocal Health, Prävention von Stimmproblemen und Vocal Coaching"
+    priority: "medium"
+    pillar_topics:
+      - stimmhygiene
+      - fehlervermeidung
+      - regeneration_techniken
+      - notfaelle_intervention
+
+# Pillar Pages (Main Content Hubs - basierend auf SEO-Masterplan)
+pillar_pages:
+  grundlagen_cvt:
+    title: "CVT Grundlagen - Die moderne Stimmtechnik für Chorsänger"
+    url: "/cvt-grundlagen"
+    target_keywords:
+      primary: "cvt stimmtechnik erklärt"
+      secondary:
+        - "complete vocal technique deutsch"
+        - "cvt für chorleiter"
+        - "moderne stimmtechnik chor"
+        - "stimmtechnik grundlagen"
+    cluster_articles:
+      - "cvt-anwendung-chor"
+      - "stimmtechnik-vs-klassisch"
+      - "cvt-basics-chorleiter"
+      - "vocal-mode-erklaert"
+    content_brief:
+      target_audience: "Chorleiter:innen, ambitionierte Sänger:innen, Vocal-Coaches"
+      search_intent: "Educational - Understanding CVT basics"
+      word_count: 3000
+      content_type: "Comprehensive Guide"
+      internal_links:
+        - "/stimmbildung-chor"
+        - "/fehlerquellen-loesungen"
+        - "/vocal-health"
+        - "/probentraining"
+
+  stimmbildung_chor:
+    title: "Stimmbildung im Chor - CVT-basierte Probenmethodik"
+    url: "/stimmbildung-chor"
+    target_keywords:
+      primary: "chor stimmbildung moderne methoden"
+      secondary:
+        - "cvt übungen chor"
+        - "chorprobe neue methoden"
+        - "stimmbildung chorleiter"
+        - "chorprobenmethodik"
+    cluster_articles:
+      - "chorprobe-warmup-cvt"
+      - "stimmbildung-gruppenunterricht"
+      - "atmung-cvt-chor"
+      - "resonanz-training-chor"
+    content_brief:
+      target_audience: "Chorleiter:innen, Vocal-Coaches"
+      search_intent: "Actionable - Practical choir training methods"
+      word_count: 3500
+      content_type: "Methodik Guide"
+      internal_links:
+        - "/cvt-grundlagen"
+        - "/blending-intonation"
+        - "/probentraining"
+        - "/motivationsstrategien"
+
+  fehlerquellen_loesungen:
+    title: "Stimmprobleme & CVT-Lösungen - Wenn die Stimme versagt"
+    url: "/stimmprobleme-cvt-loesungen"
+    target_keywords:
+      primary: "stimme versagt hohe töne cvt lösung"
+      secondary:
+        - "cvt bei stimmproblemen"
+        - "hohe töne chor cvt"
+        - "stimme bricht bei volumen"
+        - "stimmtechnik fehlerquellen"
+    cluster_articles:
+      - "cvt-hohe-toene-loesung"
+      - "vocal-break-cvt-methode"
+      - "registerwechsel-cvt"
+      - "stimme-versagt-ursachen"
+    content_brief:
+      target_audience: "Chorsänger:innen mit Stimmproblemen, Chorleiter:innen"
+      search_intent: "Problem-solving - Specific vocal issues"
+      word_count: 2800
+      content_type: "Troubleshooting Guide"
+      internal_links:
+        - "/cvt-grundlagen"
+        - "/vocal-health"
+        - "/notfaellintervention"
+        - "/private-coaching"
+
+  blending_basics:
+    title: "Chor-Blending Basics - Homogener Klang ohne Individualitätsverlust"
+    url: "/chor-blending-basics"
+    target_keywords:
+      primary: "chor blending moderne technik"
+      secondary:
+        - "chor intonation verbessern"
+        - "sich manche stimmen nicht mischen"
+        - "vocal blending chorleiter"
+        - "chor klang homogen machen"
+    cluster_articles:
+      - "blending-cvt-grundlagen"
+      - "vowel-matching-chor"
+      - "consonant-attack-cvt"
+      - "dynamik-anpassung-blending"
+    content_brief:
+      target_audience: "Chorleiter:innen, ambitionierte Sänger:innen"
+      search_intent: "Technical - Advanced blending techniques"
+      word_count: 2500
+      content_type: "Technical Guide"
+      internal_links:
+        - "/cvt-grundlagen"
+        - "/intonation-training"
+        - "/register-ueberblendung"
+        - "/blending-troubleshooting"
+
+  register_ueberblendung:
+    title: "Register-Überblendung - Nahtlose Übergänge im Chor"
+    url: "/register-ueberblendung-chor"
+    target_keywords:
+      primary: "register ueberblendung chor cvt"
+      secondary:
+        - "bruststimme kopfstimme chor"
+        - "registerwechsel chorsänger"
+        - "vocal registers nahtlos verbinden"
+        - "cvt register training"
+    cluster_articles:
+      - "cvt-register-finden"
+      - "brust-kopf-verbindung-chor"
+      - "registerbruch-verhindern"
+      - "ueberblendungs-uebungen"
+    content_brief:
+      target_audience: "Fortgeschrittene Chorsänger:innen, Pro-Chorleiter:innen"
+      search_intent: "Expertise - Advanced vocal register work"
+      word_count: 2200
+      content_type: "Expert Guide"
+      internal_links:
+        - "/cvt-grundlagen"
+        - "/blending-basics"
+        - "/vocal-mode-wechsel"
+        - "/advanced-techniques"
+
+# Content Production Pipeline (basierend auf Business-Plan)
+production_pipeline:
+  weekly_goals:
+    articles: 2 # Erhöht von 1 auf 2 für schnelleres Wachstum
+    newsletters: 1
+    social_posts: 8 # Pro Artikel: LinkedIn, Instagram (Reel+Carousel), X, Facebook
+    analytics_reports: 1
+
+  content_types:
+    newsletter:
+      platform: "brevo"
+      template: "newsletter-template.md"
+      scheduling: "weekly"
+      cta_strategy: "progressive" # Newsletter → Mini-Kurs → Trial → VE → ProGroup
+
+    seo_article:
+      platform: "webflow"
+      template: "seo-article-template.md"
+      scheduling: "twice-weekly"
+      optimization: "topic-cluster-based"
+
+    social_media:
+      platforms: ["linkedin", "instagram", "x", "facebook"]
+      templates:
+        linkedin: "linkedin-professional-post.md"
+        linkedin_carousel: "linkedin-carousel.md"
+        instagram: "instagram-reel-script.md"
+        instagram_carousel: "instagram-carousel.md"
+        x: "x-thread-template.md"
+        facebook: "facebook-community-post.md"
+      scheduling: "automated"
+      repurposing_strategy: "article-to-social-multiplier"
+
+# Keyword Strategy (aus SEO-Masterplan)
+keyword_strategy:
+  # Priority 1: High-Intent Keywords (Top of Funnel)
+  high_priority_keywords:
+    - "cvt stimmtechnik chorleiter"
+    - "chor stimmbildung moderne methoden"
+    - "cvt für chorleiter"
+    - "stimmtechnik chor modern"
+    - "chor probenmethodik neu"
+
+  # Priority 2: Problem-Solving Keywords (Mid Funnel)
+  problem_solving_keywords:
+    - "stimme versagt hohe töne cvt"
+    - "chor klang nicht homogen"
+    - "sich manche stimmen nicht mischen"
+    - "registerwechsel chorprobleme"
+    - "chor intonation verbessern"
+
+  # Priority 3: Quick Win Keywords (Bottom Funnel)
+  quick_win_keywords:
+    - "cvt übungen chor sofort"
+    - "chorprobe warmup neu"
+    - "vocal blending schnelle methode"
+    - "chorintonation übung 5 minuten"
+    - "cvt basics tutorial deutsch"
+
+  # Long-tail Opportunities (für Skalierung)
+  long_tail_opportunities:
+    - "complete vocal technique deutsch für chorleiter"
+    - "cvt stimmtechnik für anfänger chorleiter"
+    - "chor stimulation moderne konzepte"
+    - "vocal blending mit cvt im ensemble"
+    - "chor register training fortgeschrittene"
+
+# Performance Tracking (gemäß KPI-Plan)
+performance_metrics:
+  traffic_goals:
+    monthly_visitors: 5000 # Konservatives Ziel für 6 Monate
+    organic_traffic_percentage: 70
+    email_subscribers: 800
+    trial_signups: 15
+
+  engagement_targets:
+    email_open_rate: 25
+    social_engagement_rate: 4
+    content_share_rate: 2
+    newsletter_reply_rate: 3
+
+  conversion_goals:
+    lead_conversion_rate: 2.5
+    trial_to_lecture_rate: 40
+    lecture_to_progroup_rate: 25
+    progroup_to_coaching_rate: 15
+
+# Editorial Calendar (praktische Umsetzung)
+editorial_calendar:
+  2025-10:
+    week_1:
+      topic: "grundlagen_cvt"
+      angle: "CVT Grundlagen für chorische Anwendung - Was wirklich zählt"
+      target_keywords: ["cvt stimmtechnik chorleiter", "stimmtechnik grundlagen"]
+      content_type: "pillar_page"
+      funnel_stage: "awareness"
+
+    week_2:
+      topic: "stimmbildung_chor"
+      angle: "Moderne Chorproben mit CVT - Effektivität steigern"
+      target_keywords: ["chor stimmbildung moderne methoden", "cvt übungen chor"]
+      content_type: "cluster_article"
+      funnel_stage: "consideration"
+
+    week_3:
+      topic: "fehlerquellen_loesungen"
+      angle: "Stimmprobleme im Chor - CVT als Problemlöser"
+      target_keywords: ["stimme versagt hohe töne cvt lösung"]
+      content_type: "cluster_article"
+      funnel_stage: "decision"
+
+    week_4:
+      topic: "blending_basics"
+      angle: "Chor-Blending ohne Individualität zu verlieren"
+      target_keywords: ["chor blending moderne technik", "sich manche stimmen nicht mischen"]
+      content_type: "cluster_article"
+      funnel_stage: "action"
+
+# Quick Wins Priority List (direkt aus SEO-Masterplan)
+quick_wins:
+  high_priority:
+    fehlerquellen_loesungen: "Stimmprobleme & CVT-Lösungen - hoher Bedarf, geringe Konkurrenz"
+    cvt_technique: "CVT Grundlagen - Grundlage für alle anderen Themen"
+    stimmbildung_chor: "Chorprobenmethodik - direkt nutzbar für Zielgruppe"
+    blending_basics: "Chor-Blending - schwieriges Thema mit hoher Suchintention"
+
+  medium_priority:
+    register_ueberblendung: "Register-Übergänge - fortgeschrittenes Thema mit treuer Zielgruppe"
+    vocal_health: "Stimmgesundheit - wichtiger Zusatznutzen"
+    probenmethodik: "Praktische Probenmethodik - starke Intentions-Keywords"
+
+  low_priority:
+    choir_leadership: "Chorführung - wichtig aber geringere direkte Suchintention"
+    troubleshooting: "Troubleshooting - eher Long-Tail Keywords"
+
+# Funnel-Specific Content Strategy
+funnel_content_strategy:
+  awareness_stage:
+    platforms: ["newsletter", "linkedin", "instagram"]
+    content_types: ["educational_posts", "problem_identification", "cvt_basics"]
+    cta_type: "newsletter_optin"
+    cta_examples:
+      - "Kostenlose CVT 101 Mini-Kurs"
+      - "Stimmtechnik Checkliste"
+      - "CVT vs Klassisch Vergleich"
+
+  consideration_stage:
+    platforms: ["newsletter", "seo_articles", "youtube"]
+    content_types: ["how_to_guides", "comparison_content", "case_studies"]
+    cta_type: "trial_or_lecture"
+    cta_examples:
+      - "7 € Stimmanalyse"
+      - "CVT Basics Workshop (47€)"
+      - "Stimmtechnik Check Call"
+
+  decision_stage:
+    platforms: ["seo_articles", "webinar", "case_studies"]
+    content_types: ["product_comparisons", "success_stories", "detailed_reviews"]
+    cta_type: "product_purchase"
+    cta_examples:
+      - "VocalEssentials (247€)"
+      - "ProGroup (997€)"
+      - "1:1 Coaching (ab 1.800€)"
+
+  retention_stage:
+    platforms: ["newsletter", "community", "social"]
+    content_types: ["advanced_techniques", "community_successes", "ongoing_support"]
+    cta_type: "upsell_or_renewal"
+    cta_examples:
+      - "Fortgeschrittene CVT Workshop"
+      - "Chorleiter Mastermind"
+      - "ProGroup Verlängerung"
+
+# Internal Linking Strategy (SEO-optimiert)
+internal_linking_strategy:
+  pillar_cluster_links:
+    - "Each pillar links to ALL cluster articles"
+    - "Each cluster links to its pillar page"
+    - "Related clusters link to each other"
+    - "Contextual anchor texts with keywords"
+
+  cross_topic_links:
+    - "CVT topics → Vocal Health"
+    - "Blending topics → Technical Practice"
+    - "Chor Leadership topics → Community Building"
+    - "Problem solving → Advanced techniques"
+
+  link_distribution:
+    pillar_pages: "15-20 internal links each"
+    cluster_articles: "3-5 internal links each"
+    contextual_depth: "3 levels of topic hierarchy"
+
+# Content Quality Standards
+content_quality_standards:
+  authenticity_requirements:
+    personal_experience: "Must include Adrian's specific choir/teaching experiences"
+    voice_consistency: "Follow Adrian's 161-line tone-of-voice guide"
+    expert_opinions: "Include clear personal opinions and recommendations"
+    practical_examples: "Real choir situations with specific techniques"
+
+  seo_requirements:
+    keyword_naturalness: "Keywords integrated naturally, not stuffed"
+    internal_linking: "2-5 relevant internal links per article"
+    meta_optimization: "Complete meta titles, descriptions, schema"
+    readability: "Flesch-Kincaid score 50-70 (German readability)"
+
+  technical_requirements:
+    cvt_accuracy: "All CVT concepts verified against scientific sources"
+    practical_applicability: "Every technique tested in real choir settings"
+    progressive_structure: "Content builds logically from basic to advanced"
+
+# Integration Points (mit anderen Modulen/Tools)
+integration_points:
+  thrivecart_integration:
+    - "Product links in CTAs"
+    - "Conversion tracking via ThriveCart"
+    - "Customer journey mapping"
+
+  brevo_integration:
+    - "Newsletter automation"
+    - "Segment-based content delivery"
+    - "Open/click tracking for optimization"
+
+  webflow_integration:
+    - "CMS-based publishing workflow"
+    - "SEO optimization in CMS"
+    - "Schema markup generation"
+
+  google_search_console:
+    - "Topic performance monitoring"
+    - "Quick-win opportunity identification"
+    - "Content gap analysis"
+
+# Success Metrics & KPIs
+success_metrics:
+  content_production:
+    articles_per_month: 8 # Target from business plan
+    newsletters_per_month: 4
+    social_assets_per_month: 32
+    content_quality_score: 75 # Average authenticity score
+
+  traffic_growth:
+    organic_traffic_growth: "20% monthly increase"
+    keyword_ranking_improvement: "+10 positions per target keyword"
+    click_through_rate_improvement: "+15% average CTR"
+
+  conversion_metrics:
+    newsletter_signup_rate: "3% of website visitors"
+    trial_conversion_rate: "4% of newsletter subscribers"
+    customer_acquisition_cost: "<50€ per new customer"
+    customer_lifetime_value: "2.000€ average"
+
+# Content Evolution Strategy
+content_evolution:
+  month_1_3:
+    focus: "Foundation building"
+    content_types: ["pillar_pages", "basic_cluster_articles"]
+    distribution: "newsletter + SEO articles"
+    metrics: "Traffic establishment, keyword baseline"
+
+  month_4_6:
+    focus: "Authority building"
+    content_types: ["advanced_clusters", "problem_solving_content"]
+    distribution: "add social media, video content"
+    metrics: "Keyword rankings, traffic growth"
+
+  month_7_12:
+    focus: "Market domination"
+    content_types: ["expert_guides", "case_studies", "thought_leadership"]
+    distribution: "full multi-platform, community building"
+    metrics: "Market share, brand authority, conversion optimization"
+
+# Maintenance & Optimization
+maintenance_schedule:
+  weekly_tasks:
+    - "Content performance review"
+    - "Keyword ranking checks"
+    - "Social media engagement analysis"
+    - "Newsletter open/click rates"
+
+  monthly_tasks:
+    - "Topic map update based on GSC data"
+    - "Content gap analysis"
+    - "Internal link optimization"
+    - "Competitor content analysis"
+
+  quarterly_tasks:
+    - "Pillar page content refresh"
+    - "SEO strategy review and adjustment"
+    - "Content quality audit"
+    - "Platform algorithm changes review"
+# ---
+# **Zusätzliche Konfiguration für CVT-Spezialisierung:**
+
+# expertise_validation:
+#   cvt_certification: "Adrian's CVT training background and experience"
+#   practical_experience: "Real choir application case studies and results"
+#   scientific_backing: "Research references and scientific validation"
+#   peer_review: "Community feedback and expert validation"
+
+# competitive_differentiation:
+#   unique_selling_proposition: "Interview-basiert + CVT + Chorleiter-Fokus"
+#   voice_differentiation: "Adrian's authentic tone vs. academic CVT content"
+#   practical_differentiation: "Real choir settings vs. theoretical vocal techniques"
+#   community_differentiation: "Integrated support vs. standalone information products
